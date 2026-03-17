@@ -1,0 +1,50 @@
+<mat-toolbar class="toolbar-title" color="primary">
+  Adicionar/Editar Sketchbook
+</mat-toolbar>
+
+<mat-card class="card">
+  <mat-card-content>
+    <form class="form" [formGroup]="form">
+      <div class="grid">
+        <!-- Nome -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" placeholder="Ex.: Tocantins" />
+        </mat-form-field>
+
+        <!-- QuantidadeFolhas -->
+        <mat-form-field appearance="outline">
+          <mat-label>QuantidadeFolhas</mat-label>
+          <input matInput formControlName="quantidadefolhas" maxlength="2" placeholder="Ex.: TO" />
+        </mat-form-field>
+
+        <!-- Capa -->
+        <mat-form-field appearance="outline">
+          <mat-label>Capa</mat-label>
+          <mat-select matInput formControlName="idCapa" placeholder="Selecione uma capa">
+            <mat-option [value]="null" disabled="false"> Nenhum </mat-option>
+            @for (c of capas; track c.id) {
+            <mat-option [value]="c.id">{{c.nome}} </mat-option>
+
+            }
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button routerLink="/sketchbooks">
+          Cancelar
+        </button>
+        <button mat-raised-button [disabled]="!form.value.id" matButton="elevated"
+          (click)="openDialog('4000ms', '2500ms')">
+          Deletar
+        </button>
+
+        <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
