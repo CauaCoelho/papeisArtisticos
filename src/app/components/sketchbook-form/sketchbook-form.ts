@@ -42,6 +42,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class SketchbookForm implements OnInit {
+  readonly capa = inject(Capa);
   readonly dialog = inject(MatDialog);
   readonly form: FormGroup;
   capas: Capa[] = [];
