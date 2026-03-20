@@ -64,10 +64,11 @@ export class SketchbookForm implements OnInit {
   }
 
   ngOnInit(): void {
-    const sketchbook:Sketchbook = this.activatedRoute.snapshot.data['sketchbook'];
+    const sketchbook: Sketchbook = this.activatedRoute.snapshot.data['sketchbook'];
 
-    this.capaService.getCapas().subscribe(data => { this.capas = data 
-      
+    this.capaService.getCapas().subscribe(data => {
+      this.capas = data
+
       if (sketchbook)
         this.form.patchValue({
           id: sketchbook.id,
@@ -77,12 +78,12 @@ export class SketchbookForm implements OnInit {
         });
     })
 
-    
+
   }
 
 
   salvar() {
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
@@ -93,7 +94,7 @@ export class SketchbookForm implements OnInit {
     resultado.subscribe({
       next: (obj) => {
         this.router.navigateByUrl('/sketchbooks');
-       //this.exibirMensagem('Sketchbook salvo com sucesso!');
+        this.exibirMensagem('Sketchbook salvo com sucesso!');
       },
       error: (err) => {
         console.log('Erro ao salvar sketchbook', err);
@@ -109,9 +110,13 @@ export class SketchbookForm implements OnInit {
       exitAnimationDuration,
       disableClose: true //impedir do usuário fechar o dialog clicando fora ou pressionando ESC
     })
+  }
 
-    //exibirMensagem (mensagem:string):void{
-    //}
-
+  exibirMensagem(mensagem: string): void {
+    this.snack.open(mensagem, 'Fechar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
   }
 }
