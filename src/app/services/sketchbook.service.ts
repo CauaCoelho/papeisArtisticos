@@ -26,6 +26,10 @@ export class SketchbookService {
     return this.httpClient.get<Sketchbook[]>(this.api, {params});
   }
 
+  findByNome(nome: string): Observable<Sketchbook[]> {
+    return this.httpClient.get<Sketchbook[]>(`${this.api}/search?nome=${nome}`);
+  }
+
   findById(id: any): Observable<Sketchbook> {
     // O mesmo que (this.api + "/" + id)
     return this.httpClient.get<Sketchbook>(`${this.api}/${id}`);

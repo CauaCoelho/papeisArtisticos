@@ -14,11 +14,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sketchbook',
   imports: [
-     MatToolbarModule,
+    MatToolbarModule,
     RouterLink,
     MatIconModule,
     MatFormFieldModule,
@@ -27,7 +28,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatButtonModule,
     MatDialogModule,
     CommonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule
 
   ],
   templateUrl: './sketchbook.html',
@@ -41,11 +43,15 @@ export class SketchbookComponent implements OnInit {
   page = 0;
   pageSize = 2;
 
+  termoBusca: string = '';
+  listaOriginal: any[] = [];
+  listaFiltrada: any[] = [];
+
   readonly dialog = inject(MatDialog);
   readonly form: FormGroup;
   readonly fb = inject(FormBuilder);
 
-  displayedColumns: string[] = ['numero', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['numero', 'nome', 'quantidadePaginas', 'acao'];
 
   dataSource = new MatTableDataSource<Sketchbook>([]);
 
@@ -60,12 +66,13 @@ export class SketchbookComponent implements OnInit {
   }
   ngOnInit(): void {
     this.sketchbookService.findAll(this.page, this.pageSize).subscribe(data => {
-      //this.sketchbooks = data;
+      this.listaOriginal = data;
+      this.listaFiltrada = data;
       this.dataSource.data = data;
     });
-    this.sketchbookService.count().subscribe(data =>{
+    this.sketchbookService.count().subscribe(data => {
       this.totalRecords = data
-    }) 
+    })
   }
 
   applyFilter(event: Event) {
@@ -82,10 +89,16 @@ export class SketchbookComponent implements OnInit {
     })
   }
 
-  paginar(event: PageEvent): void{
+  paginar(event: PageEvent): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
 
+  }
+ 
+  buscar() {
+      this.sketchbookService.findByNome(this.termoBusca).subscribe((data)=>{
+    this.listaFiltrada = data;
+      })
   }
 }

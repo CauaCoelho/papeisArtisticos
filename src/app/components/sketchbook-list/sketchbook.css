@@ -6,14 +6,38 @@
 
 }
 
+.top-bar{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.filtro{
+  flex: 1;
+}
+
+:host {
+  display: block;
+  padding: clamp(12px, 2vw, 24px);
+}
+
 .full-width-input{
     width: 100%;
     margin-bottom: 20px;
 }
 
-mat-card{
-    max-width: 800px;
-    margin: 2rem auto;
+/* Estiliza os cartões:
+   - largura máxima ocupa todo o espaço disponível
+   - arredondamento dos cantos (9px) */
+.card {
+  max-width: 100%;
+  /* margin-inline: auto; */ /* centralizaria horizontalmente se ativado */
+  border-radius: 18px;
+}
+
+/* Faz com que os campos de formulário Material ocupem 100% da largura */
+mat-form-field {
+  width: 100%;
 }
 
 mat-card-actions{
@@ -26,6 +50,26 @@ mat-card-actions{
     flex-direction: column;
     gap: 1rem;
 }
+/* Área de ações (botões, etc.):
+   - usa flexbox
+   - adiciona espaçamento de 12px entre itens
+   - alinha os itens à direita (flex-end)
+   - adiciona padding superior de 8px */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+/* Botões com estilo flat (preenchidos):
+   - cantos arredondados (12px)
+   - espaçamento horizontal maior (18px) */
+button[mat-flat-button] {
+  border-radius: 12px;
+  padding-inline: 18px;
+}
+
 
 button[mat-raised-button]{
     margin-left: auto;
@@ -37,4 +81,25 @@ button[mat-raised-button]{
 button[mat-raised-button]:not(:last-child){
     margin-right: 1rem;
     background-color: #303f9f;
+}
+
+
+.busca-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.busca-input {
+  flex: 1;
+}
+
+
+
+/* Responsividade: 
+   - quando a tela for menor que 640px, a grid passa a ter apenas 1 coluna */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
