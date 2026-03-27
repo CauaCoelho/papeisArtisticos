@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Capa } from '../capa/capa';
 import { Sketchbook } from '../../models/sketchbook.model';
 import { SketchbookService } from '../../services/sketchbook.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -59,9 +59,9 @@ export class SketchbookComponent implements OnInit {
     private sketchbookService: SketchbookService,
   ) {
     this.form = this.fb.group({
-      nome: [''],
-      sigla: [''],
-      idRegiao: [null]
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      quantidadeFolhas: ['', [Validators.required, Validators.min(20)]],
+      Capa: [null, Validators.required, Validators.pattern(/^(capa-dura|capa-flexivel|capa-espiral)$/)]
     })
   }
   ngOnInit(): void {
