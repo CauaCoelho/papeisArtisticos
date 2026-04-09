@@ -5,9 +5,27 @@ import { SketchbookService } from '../../services/sketchbook.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { AnimacaoDialog } from '../animacao-dialog/animacao-dialog';
 import { CommonModule } from '@angular/common';
+
+export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
+  override itemsPerPageLabel = 'Itens por página';
+  override nextPageLabel = 'Próxima página';
+  override previousPageLabel = 'Página anterior';
+  override firstPageLabel = 'Primeira página';
+  override lastPageLabel = 'Última página';
+
+  override getRangeLabel = (page: number, pageSize: number, length: number): string => {
+    if (length === 0 || pageSize === 0) {
+      return `0 de ${length}`;
+    }
+
+    const startIndex = page * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, length);
+    return `${startIndex + 1} – ${endIndex} de ${length}`;
+  };
+}
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +36,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sketchbook',
+  standalone: true,
+  providers: [{ provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }],
   imports: [
     MatToolbarModule,
     RouterLink,

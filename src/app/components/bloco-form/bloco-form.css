@@ -1,0 +1,26 @@
+.toolbar-title {
+  font-weight: 600;
+}
+
+.card {
+  max-width: 850px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

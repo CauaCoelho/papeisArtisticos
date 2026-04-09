@@ -1,8 +1,7 @@
 import { Capa } from "./capa.model";
+import { Produto } from "./produto.model";
 
-export class Sketchbook {
-    id!: number;
-    nome!: string;
+export class Sketchbook extends Produto{
     quantidadefolhas!: string
     capa!: Capa;
   

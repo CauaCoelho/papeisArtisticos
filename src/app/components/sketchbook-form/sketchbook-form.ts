@@ -3,7 +3,7 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SketchbookService } from '../../services/sketchbook.service';
 import { Sketchbook } from '../../models/sketchbook.model';
@@ -57,9 +57,9 @@ export class SketchbookForm implements OnInit {
   ) {
     this.form = this.fb.group({
       id: [null],
-      nome: [''],
-      quantidadefolhas: [''],
-      idCapa: [null]
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      quantidadefolhas: [null, [Validators.required, Validators.min(20)]],
+      idCapa: [null, Validators.required]
     })
   }
 

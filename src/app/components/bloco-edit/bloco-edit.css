@@ -1,0 +1,10 @@
+.form-container {
+  display: grid;
+  gap: 16px;
+  max-width: 520px;
+  margin: 24px auto;
+}
+
+mat-form-field {
+  width: 100%;
+}

@@ -19,8 +19,8 @@ export class SketchbookEdit implements OnInit {
 
   readonly form = new FormGroup({
     id: new FormControl<number | null>(null),
-    nome: new FormControl('', Validators.required),
-    quantidadefolhas: new FormControl('', Validators.required),
+    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    quantidadefolhas: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
     idRegiao: new FormControl<number | null>(null)
   });
 
@@ -55,18 +55,21 @@ export class SketchbookEdit implements OnInit {
   }
 
   salvar(): void {
-    if (this.form.valid){
-      this.sketchbookService.update(<any>this.form.value).subscribe({
-        next: () => {
-          alert('Sketchbook atualizado com sucesso!');
-          this.router.navigate(['/sketchbooks']);
-        },
-        error: (err) => {
-          console.error('Erro ao atualizar sketchbook:', err);
-          alert('Erro ao atualizar sketchbook.');
-        }
-      });
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+
+    this.sketchbookService.update(<any>this.form.value).subscribe({
+      next: () => {
+        alert('Sketchbook atualizado com sucesso!');
+        this.router.navigate(['/sketchbooks']);
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar sketchbook:', err);
+        alert('Erro ao atualizar sketchbook.');
+      }
+    });
   }
 
 

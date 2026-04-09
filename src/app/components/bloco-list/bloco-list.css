@@ -1,0 +1,26 @@
+.mat-toolbar {
+  margin-bottom: 16px;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-bar,
+.busca-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.busca-input {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+}
