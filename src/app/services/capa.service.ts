@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
   providedIn: 'root'
 })  
 export class CapaService {
-     private api = 'https://localhost:8080/regioes'
+     private api = 'https://localhost:8080/capas';
 
     constructor(private httpClient : HttpClient) {}
 

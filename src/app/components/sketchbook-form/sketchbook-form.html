@@ -9,7 +9,7 @@
         <!-- Nome -->
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput formControlName="nome" placeholder="Ex.: Tocantins" />
+          <input matInput formControlName="nome" placeholder="Ex.: Sketchbook" />
           <mat-error *ngIf="form.get('nome')?.hasError('required') && form.get('nome')?.touched">
             O nome é obrigatório.
           </mat-error>

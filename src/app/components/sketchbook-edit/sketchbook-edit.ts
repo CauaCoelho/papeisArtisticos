@@ -21,7 +21,7 @@ export class SketchbookEdit implements OnInit {
     id: new FormControl<number | null>(null),
     nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
     quantidadefolhas: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
-    idRegiao: new FormControl<number | null>(null)
+    idCapa: new FormControl<number | null>(null)
   });
 
   constructor(
@@ -44,7 +44,7 @@ export class SketchbookEdit implements OnInit {
           id: sketchbook.id,
           nome: sketchbook.nome,
           quantidadefolhas: sketchbook.quantidadefolhas,
-          idRegiao: sketchbook.idRegiao
+          idCapa: sketchbook.idCapa
         });
       },
       error: (err) => {
