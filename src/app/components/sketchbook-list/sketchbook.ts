@@ -71,7 +71,7 @@ export class SketchbookComponent implements OnInit {
   readonly form: FormGroup;
   readonly fb = inject(FormBuilder);
 
-  displayedColumns: string[] = ['numero', 'nome', 'quantidadePaginas', 'acao'];
+  displayedColumns: string[] = ['numero', 'nome', 'quantidadeFolhas', 'acao'];
 
   dataSource = new MatTableDataSource<Sketchbook>([]);
 
@@ -85,10 +85,11 @@ export class SketchbookComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.sketchbookService.findAll(this.page, this.pageSize).subscribe(data => {
-      this.listaOriginal = data;
-      this.listaFiltrada = data;
-      this.dataSource.data = data;
+    this.sketchbookService.findAll(this.page, this.pageSize).subscribe(response => {
+      this.listaOriginal = response.data;
+      this.listaFiltrada = response.data;
+      this.dataSource.data = response.data;
+      this.totalRecords = response.total;
     });
     this.sketchbookService.count().subscribe(data => {
       this.totalRecords = data

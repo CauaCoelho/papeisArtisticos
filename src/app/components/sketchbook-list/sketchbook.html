@@ -48,9 +48,9 @@
   </ng-container>
 
   <!-- QuantidadePáginas Column -->
-  <ng-container matColumnDef="quantidadePaginas">
+  <ng-container matColumnDef="quantidadeFolhas">
     <th mat-header-cell *matHeaderCellDef> Quantidade de Páginas </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.quantidadePaginas}} </td>
+    <td mat-cell *matCellDef="let obj"> {{obj.quantidadeFolhas}} </td>
   </ng-container>
 
   <!-- Acao  Column -->
@@ -73,7 +73,7 @@
 
 <mat-paginator 
   [pageSizeOptions]="[2, 4, 8]"
-  [pageIndex]="pageSize"
+  [pageIndex]="page"
   [length]="totalRecords"
   (page)="paginar($event)">
 </mat-paginator>
