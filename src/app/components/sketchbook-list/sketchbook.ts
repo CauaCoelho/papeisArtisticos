@@ -88,7 +88,7 @@ export class SketchbookComponent implements OnInit {
         this.listaOriginal = response.data;
         this.listaFiltrada = response.data;
         this.dataSource.data = response.data;
-        this.totalRecords = response.totalRecords;
+        this.totalRecords = response.total;
       },
       error: err => {
         console.error('Erro ao carregar sketchbooks:', err);
