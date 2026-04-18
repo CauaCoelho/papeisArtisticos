@@ -65,7 +65,7 @@ mat-card-actions{
 /* Botões com estilo flat (preenchidos):
    - cantos arredondados (12px)
    - espaçamento horizontal maior (18px) */
-button[mat-flat-button] {
+button[mat-fab] {
   border-radius: 12px;
   padding-inline: 18px;
 }

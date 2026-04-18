@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Sketchbook } from "../models/sketchbook.model";
-import { PageResponse } from "../models/page-response.class";
+import { PageResponse } from "../interfaces/page-response.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class SketchbookService {
 
   
   private readonly api = 'http://localhost:8080/sketchbooks';
+   
 
   constructor(
     private httpClient: HttpClient,
