@@ -20,7 +20,7 @@ export class SketchbookEdit implements OnInit {
   readonly form = new FormGroup({
     id: new FormControl<number | null>(null),
     nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    quantidadefolhas: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
+    quantidadeFolhas: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
     idCapa: new FormControl<number | null>(null)
   });
 
@@ -43,7 +43,7 @@ export class SketchbookEdit implements OnInit {
         this.form.patchValue({
           id: sketchbook.id,
           nome: sketchbook.nome,
-          quantidadefolhas: sketchbook.quantidadefolhas,
+          quantidadeFolhas: sketchbook.quantidadeFolhas,
           idCapa: sketchbook.idCapa
         });
       },

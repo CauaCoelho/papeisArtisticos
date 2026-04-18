@@ -2,12 +2,17 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Capa } from '../capa/capa';
 import { Sketchbook } from '../../models/sketchbook.model';
 import { SketchbookService } from '../../services/sketchbook.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { AnimacaoDialog } from '../animacao-dialog/animacao-dialog';
 import { CommonModule } from '@angular/common';
+import { MatToolbar } from "@angular/material/toolbar";
+import { MatFormField, MatLabel } from "@angular/material/select";
+import { MatIcon } from "@angular/material/icon";
+import { RouterLink } from "@angular/router";
+import { MatInput } from "@angular/material/input";
 
 export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Itens por página';
@@ -26,78 +31,87 @@ export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
     return `${startIndex + 1} – ${endIndex} de ${length}`;
   };
 }
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sketchbook',
   standalone: true,
   providers: [{ provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }],
   imports: [
-    MatToolbarModule,
-    RouterLink,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatTableModule,
-    MatButtonModule,
+    MatPaginatorModule,
     MatDialogModule,
     CommonModule,
-    MatPaginatorModule,
+    MatToolbar,
+    MatFormField,
+    MatLabel,
+    MatIcon,
+    RouterLink,
+    MatInput,
     FormsModule
-
-  ],
+],
   templateUrl: './sketchbook.html',
   styleUrl: './sketchbook.css',
 })
 export class SketchbookComponent implements OnInit {
-  quantidadeFolhas!: number;
-  capa!: Capa;
 
-  totalRecords = 0;
+  totalRecords: number = 0;
   page = 0;
   pageSize = 2;
 
-  termoBusca: string = '';
-  listaOriginal: any[] = [];
-  listaFiltrada: any[] = [];
+  listaOriginal: Sketchbook[] = [];
+  listaFiltrada: Sketchbook[] = [];
 
   readonly dialog = inject(MatDialog);
-  readonly form: FormGroup;
   readonly fb = inject(FormBuilder);
+  readonly form: FormGroup;
 
-  displayedColumns: string[] = ['numero', 'nome', 'quantidadePaginas', 'acao'];
+  displayedColumns: string[] = ['id', 'quantidadeFolhas','idCapa', 'acao'];
 
   dataSource = new MatTableDataSource<Sketchbook>([]);
 
-  constructor(
-    private sketchbookService: SketchbookService,
-  ) {
+  constructor(private sketchbookService: SketchbookService) {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
       quantidadeFolhas: ['', [Validators.required, Validators.min(20)]],
-      Capa: [null, Validators.required, Validators.pattern(/^(capa-dura|capa-flexivel|capa-espiral)$/)]
-    })
-  }
-  ngOnInit(): void {
-    this.sketchbookService.findAll(this.page, this.pageSize).subscribe(data => {
-      this.listaOriginal = data;
-      this.listaFiltrada = data;
-      this.dataSource.data = data;
+      capa: [null, Validators.required]
     });
-    this.sketchbookService.count().subscribe(data => {
-      this.totalRecords = data
-    })
+  }
+
+  ngOnInit(): void {
+    this.carregarDados();
+  }
+
+  carregarDados(): void {
+    this.sketchbookService.findAll(this.page, this.pageSize).subscribe({
+      next: response => {
+        // 🔥 AQUI está a correção principal
+        this.listaOriginal = response.data;
+        this.listaFiltrada = response.data;
+        this.dataSource.data = response.data;
+        this.totalRecords = response.totalRecords;
+      },
+      error: err => {
+        console.error('Erro ao carregar sketchbooks:', err);
+      }
+    });
+  }
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.carregarDados(); // ✅ correto
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  buscar() {
+    this.sketchbookService.findByNome(this.termoBusca).subscribe(data => {
+      this.listaFiltrada = data;
+      this.dataSource.data = data;
+    });
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -105,20 +119,9 @@ export class SketchbookComponent implements OnInit {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
-      disableClose: true //impedir do usuário fechar o dialog clicando fora ou pressionando ESC
-    })
+      disableClose: true
+    });
   }
 
-  paginar(event: PageEvent): void {
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.ngOnInit();
-
-  }
- 
-  buscar() {
-      this.sketchbookService.findByNome(this.termoBusca).subscribe((data)=>{
-    this.listaFiltrada = data;
-      })
-  }
+  termoBusca: string = '';
 }

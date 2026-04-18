@@ -2,7 +2,8 @@ import { Capa } from "./capa.model";
 import { Produto } from "./produto.model";
 
 export class Sketchbook extends Produto{
-    quantidadefolhas!: string
+    idTextura!: number;
+    quantidadeFolhas!: number;
     capa!: Capa;
   
     

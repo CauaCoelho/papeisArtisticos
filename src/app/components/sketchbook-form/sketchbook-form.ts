@@ -58,7 +58,7 @@ export class SketchbookForm implements OnInit {
     this.form = this.fb.group({
       id: [null],
       nome: ['', [Validators.required, Validators.minLength(3)]],
-      quantidadefolhas: [null, [Validators.required, Validators.min(20)]],
+      quantidadeFolhas: [null, [Validators.required, Validators.min(20)]],
       idCapa: [null, Validators.required]
     })
   }
@@ -73,7 +73,7 @@ export class SketchbookForm implements OnInit {
         this.form.patchValue({
           id: sketchbook.id,
           nome: sketchbook.nome,
-          quantidadefolhas: sketchbook.quantidadefolhas,
+          quantidadeFolhas: sketchbook.quantidadeFolhas,
           idCapa: sketchbook.capa?.id
         });
     })

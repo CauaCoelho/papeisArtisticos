@@ -30,26 +30,26 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Número Column -->
-  <ng-container matColumnDef="numero">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Número </th>
     <td mat-cell *matCellDef="let obj; let i = index"> {{i+1}} </td>
   </ng-container>
 
   <!-- Nome Column -->
-  <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+  <ng-container matColumnDef="idCapa">
+    <th mat-header-cell *matHeaderCellDef> Capa </th>
+    @if (form.get('idCapa')?.invalid && form.get('idCapa')?.touched) {
       <div class="error-message">
         O nome é obrigatório e deve conter pelo menos 3 caracteres.
       </div>
     }
-    <td mat-cell *matCellDef="let obj"> {{obj.nome}} </td>
+    <td mat-cell *matCellDef="let obj"> {{obj.capa?.nome}} </td>
   </ng-container>
 
   <!-- QuantidadePáginas Column -->
-  <ng-container matColumnDef="quantidadePaginas">
-    <th mat-header-cell *matHeaderCellDef> Quantidade de Páginas </th>
-    <td mat-cell *matCellDef="let obj"> {{obj.quantidadePaginas}} </td>
+  <ng-container matColumnDef="quantidadeFolhas">
+    <th mat-header-cell *matHeaderCellDef> Quantidade de Folhas </th>
+    <td mat-cell *matCellDef="let obj"> {{obj.quantidadeFolhas}} </td>
   </ng-container>
 
   <!-- Acao  Column -->
@@ -72,7 +72,8 @@
 
 <mat-paginator 
   [pageSizeOptions]="[2, 4, 8]"
-  [pageIndex]="pageSize"
+  [pageSize]="pageSize"
+  [pageIndex]="page"
   [length]="totalRecords"
   (page)="paginar($event)">
 </mat-paginator>
