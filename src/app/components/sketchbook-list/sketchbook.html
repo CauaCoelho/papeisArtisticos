@@ -1,18 +1,18 @@
-<mat-toolbar class="mat-toolbar">
-  <div class="top-bar">
+<mat-toolbar class="mat-toolbar" color="primary">
+  <div class="flex-container">
     <span class="toolbartitle"> Controle de Sketchbooks </span>
   </div>
 </mat-toolbar>
 
 <div class="top-bar">
   <mat-form-field appearance="fill" class="filtro">
-  <mat-label>Filtro</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Por exemplo: Sketchbook de halloween" #input>
-</mat-form-field>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Por exemplo: Sketchbook de halloween" #input>
+  </mat-form-field>
 
-<button mat-fab color="accent" routerLink="/sketchbooks/new">
-  <mat-icon>add</mat-icon>
-</button>
+  <button mat-fab color="primary" routerLink="/sketchbooks/new">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
 <div class="busca-container">
@@ -31,20 +31,15 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Número Column -->
-  <ng-container matColumnDef="numero">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Número </th>
     <td mat-cell *matCellDef="let obj; let i = index"> {{i+1}} </td>
   </ng-container>
 
   <!-- Nome Column -->
-  <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
-      <div class="error-message">
-        O nome é obrigatório e deve conter pelo menos 3 caracteres.
-      </div>
-    }
-    <td mat-cell *matCellDef="let obj"> {{obj.nome}} </td>
+  <ng-container matColumnDef="idCapa">
+    <th mat-header-cell *matHeaderCellDef> Capa </th>
+    <td mat-cell *matCellDef="let obj"> {{obj.capa?.nome}} </td>
   </ng-container>
 
   <!-- QuantidadePáginas Column -->
@@ -57,11 +52,10 @@
   <ng-container matColumnDef="acao">
     <th mat-header-cell *matHeaderCellDef> Ação </th>
     <td mat-cell *matCellDef="let obj">
-      <button mat-icon-button color="primary" [routerLink]="['/sketchbooks/edit', obj.id]">
+      <button mat-icon-button color="primary" [routerLink]="['/sketchbooks', obj.id]">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" 
-          (click)="openDialog('4000ms', '2500ms')">
+      <button mat-icon-button color="warn" (click)="openDialog('4000ms', '2500ms')">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
@@ -71,9 +65,5 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator 
-  [pageSizeOptions]="[2, 4, 8]"
-  [pageIndex]="page"
-  [length]="totalRecords"
-  (page)="paginar($event)">
+<mat-paginator [pageSizeOptions]="[2, 4, 8]" [pageIndex]="page" [length]="totalRecords" (page)="paginar($event)">
 </mat-paginator>

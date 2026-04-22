@@ -19,7 +19,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Número de Folhas</mat-label>
-          <input matInput type="number" formControlName="numeroFolhas" placeholder="Ex.: 30" />
+          <input matInput type="number" formControlName="numeroFolhas" placeholder="Ex.: 20" />
           <mat-error [hidden]="!(form.get('numeroFolhas')?.hasError('required') && form.get('numeroFolhas')?.touched)">
             O número de folhas é obrigatório.
           </mat-error>
@@ -32,7 +32,9 @@
           <mat-label>Textura</mat-label>
           <mat-select formControlName="textura">
             <mat-option [value]="null" disabled>Selecione</mat-option>
-            <mat-option *ngFor="let textura of texturas" [value]="textura">{{ textura }}</mat-option>
+            @for (textura of texturas; track textura) {
+              <mat-option [value]="textura">{{ textura }}</mat-option>
+            }
           </mat-select>
           <mat-error [hidden]="!(form.get('textura')?.hasError('required') && form.get('textura')?.touched)">
             A textura é obrigatória.
@@ -43,7 +45,9 @@
           <mat-label>Formato</mat-label>
           <mat-select formControlName="formato">
             <mat-option [value]="null" disabled>Selecione</mat-option>
-            <mat-option *ngFor="let formato of formatos" [value]="formato">{{ formato }}</mat-option>
+            @for (formato of formatos; track formato) {
+              <mat-option [value]="formato">{{ formato }}</mat-option>
+            }
           </mat-select>
           <mat-error [hidden]="!(form.get('formato')?.hasError('required') && form.get('formato')?.touched)">
             O formato é obrigatório.

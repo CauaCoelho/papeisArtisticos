@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { SketchbookComponent } from './components/sketchbook-list/sketchbook';
-import { sketchbookResolver } from './components/resolvers/papel-resolver';
+import { sketchbookResolver } from './components/resolvers/sketchbook-resolver';
 import { BlocoListComponent } from './components/bloco-list/bloco-list';
 import { BlocoForm } from './components/bloco-form/bloco-form';
 import { BlocoEdit } from './components/bloco-edit/bloco-edit';

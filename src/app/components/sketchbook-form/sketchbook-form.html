@@ -18,14 +18,16 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- QuantidadeFolhas -->
+        <!-- quantidadeFolhas -->
         <mat-form-field appearance="outline">
           <mat-label>Quantidade de Folhas</mat-label>
-          <input matInput type="number" formControlName="quantidadefolhas" maxlength="2" placeholder="Ex.: 10" />
-          <mat-error [hidden]="!(form.get('quantidadefolhas')?.hasError('required') && form.get('quantidadefolhas')?.touched)">
+          <input matInput type="number" formControlName="quantidadeFolhas" maxlength="2" placeholder="Ex.: 20" />
+          <mat-error
+            [hidden]="!(form.get('quantidadeFolhas')?.hasError('required') && form.get('quantidadeFolhas')?.touched)">
             A quantidade de folhas é obrigatória.
           </mat-error>
-          <mat-error [hidden]="!(form.get('quantidadefolhas')?.hasError('min') && form.get('quantidadefolhas')?.touched)  ">
+          <mat-error
+            [hidden]="!(form.get('quantidadeFolhas')?.hasError('min') && form.get('quantidadeFolhas')?.touched)  ">
             A quantidade de folhas deve ser pelo menos 20.
           </mat-error>
         </mat-form-field>
@@ -51,11 +53,6 @@
         <button mat-raised-button routerLink="/sketchbooks">
           Cancelar
         </button>
-        <button mat-raised-button [disabled]="!form.value.id" matButton="elevated"
-          (click)="openDialog('4000ms', '2500ms')">
-          Deletar
-        </button>
-
         <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
           Salvar
         </button>

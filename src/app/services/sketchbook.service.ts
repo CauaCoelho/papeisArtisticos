@@ -9,6 +9,7 @@ import { PageResponse } from "../interfaces/page-response.interface";
 })
 export class SketchbookService {
 
+  
   private readonly api = 'http://localhost:8080/sketchbooks';
    
 
@@ -16,17 +17,11 @@ export class SketchbookService {
     private httpClient: HttpClient,
   ) { }
 
-  findAll(page?: number, pageSize?: number): Observable<PageResponse<Sketchbook>> {
-    let params = {}
-    if (page !== undefined && pageSize !== undefined) {
-      params = {
-        page: page?.toString(),
-        pageSize: pageSize?.toString()
-      }
-    }
-
-    return this.httpClient.get<PageResponse<Sketchbook>>(this.api, {params});
-  }
+  findAll(page: number, pageSize: number): Observable<PageResponse<Sketchbook>> {
+  return this.httpClient.get<PageResponse<Sketchbook>>(
+    `${this.api}?page=${page}&pageSize=${pageSize}`
+  );
+}
 
   findByNome(nome: string): Observable<Sketchbook[]> {
     return this.httpClient.get<Sketchbook[]>(`${this.api}/search?nome=${nome}`);
