@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
+
 export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Itens por página';
   override nextPageLabel = 'Próxima página';
@@ -50,6 +51,7 @@ export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
     MatButtonModule,
     FormsModule
   ],
+
   templateUrl: './sketchbook.html',
   styleUrl: './sketchbook.css',
 })
@@ -66,7 +68,9 @@ export class SketchbookComponent implements OnInit {
   readonly fb = inject(FormBuilder);
   readonly form: FormGroup;
 
+
   displayedColumns: string[] = ['id', 'quantidadeFolhas', 'idCapa', 'acao'];
+
 
   dataSource = new MatTableDataSource<Sketchbook>([]);
 
@@ -85,6 +89,7 @@ export class SketchbookComponent implements OnInit {
   carregarDados(): void {
     this.sketchbookService.findAll(this.page, this.pageSize).subscribe({
       next: response => {
+
         this.listaOriginal = response.data;
         this.listaFiltrada = response.data;
         this.dataSource.data = response.data;
