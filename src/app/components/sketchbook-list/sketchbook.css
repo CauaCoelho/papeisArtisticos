@@ -1,106 +1,35 @@
-.mat-toolbar {
-  margin-bottom: 16px;
-}
-
-.flex-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.toolbartitle {
-  display: flex;
-  justify-content: center;
-  font-size: x-large;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.top-bar,
-.busca-container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-table {
-  width: 100%;
-}
-
-
-.filtro {
-  flex: 1;
-}
-
 :host {
-  display: block;
-  padding: clamp(12px, 2vw, 24px);
-}
-
-.full-width-input {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-/* Estiliza os cartões:
-   - largura máxima ocupa todo o espaço disponível
-   - arredondamento dos cantos (9px) */
-.card {
-  max-width: 100%;
-  /* margin-inline: auto; */
-  /* centralizaria horizontalmente se ativado */
-  border-radius: 18px;
-}
-
-::placeholder {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-}
-
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.form-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  height: 100vh;
 }
 
-/* Área de ações (botões, etc.):
-   - usa flexbox
-   - adiciona espaçamento de 12px entre itens
-   - alinha os itens à direita (flex-end)
-   - adiciona padding superior de 8px */
-.actions {
+.content {
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  padding-top: 8px;
+  flex: 1;
+  padding-top: 80px;
 }
 
-/* Botões com estilo flat (preenchidos):
-   - cantos arredondados (12px)
-   - espaçamento horizontal maior (18px) */
-button[mat-fab] {
-  border-radius: 12px;
-  padding-inline: 18px;
+main {
+  flex: 1;
+  padding: 20px;
 }
 
-
-button[mat-raised-button] {
-  margin-left: auto;
-  width: 120px;
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 24px;
+.paper-grain {
+    position: relative;
 }
 
-button[mat-raised-button]:not(:last-child) {
-  margin-right: 1rem;
-  background-color: #303f9f;
+.paper-grain::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 1;
 }
 
 

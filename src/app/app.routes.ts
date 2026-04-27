@@ -7,8 +7,11 @@ import { BlocoEdit } from './components/bloco-edit/bloco-edit';
 import { blocoResolver } from './components/resolvers/bloco-resolver';
 import { SketchbookEdit } from './components/sketchbook-edit/sketchbook-edit';
 import { SketchbookForm } from './components/sketchbook-form/sketchbook-form';
+import { TemplateAdm } from './components/layout/template-adm/template-adm';
 
 export const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: TemplateAdm, title: 'Dashboard' },
   { path: 'sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
   { path: 'sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
   {

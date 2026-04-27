@@ -1,0 +1,239 @@
+<main class="pt-32 pb-24 max-w-[1440px] mx-auto px-12">
+<!-- Dashboard Header -->
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Studio Dashboard</h1>
+<p class="text-body-lg text-on-surface-variant max-w-xl">Overview of your tactile paper collection and recent creative transactions.</p>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 py-3 border border-primary-container text-primary font-medium rounded-lg hover:bg-sky-50 transition-all">
+<span class="material-symbols-outlined">download</span>
+                    Export Data
+                </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container font-medium rounded-lg shadow-[0_4px_0_0_rgba(66,97,125,0.2)] active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined">add</span>
+                    New Product
+                </button>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-12 gap-gutter mb-stack-lg">
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-lowest paper-texture rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.1)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-2">Monthly Revenue</p>
+<h3 class="text-h2 font-h2 text-on-surface">$12,480.00</h3>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-label-sm">+14.2% from last month</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-lowest paper-texture rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.1)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+</div>
+<p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-2">Active Orders</p>
+<h3 class="text-h2 font-h2 text-on-surface">158</h3>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+<span class="text-label-sm">42 pending fulfillment</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-lowest paper-texture rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.1)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-2">Artist Community</p>
+<h3 class="text-h2 font-h2 text-on-surface">3,204</h3>
+<div class="mt-4 flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-label-sm">85 new members today</span>
+</div>
+</div>
+</div>
+<!-- Management Section -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Add New Product Form & Preview -->
+<div class="col-span-12 lg:col-span-7 space-y-stack-md">
+<div class="bg-surface-container-lowest paper-texture p-10 rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.1)]">
+<h3 class="font-h3 text-h3 mb-stack-md border-b border-sky-100 pb-4">Draft New Paper Entry</h3>
+<form class="space-y-8">
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-sm uppercase text-on-surface-variant">Paper Name</label>
+<input class="w-full bg-transparent border-b border-primary-container focus:ring-0 focus:border-primary focus:bg-primary-container/5 transition-all p-3" placeholder="e.g. Khadi Rag 320gsm" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-sm uppercase text-on-surface-variant">Collection</label>
+<select class="w-full bg-transparent border-b border-primary-container focus:ring-0 focus:border-primary focus:bg-primary-container/5 transition-all p-3">
+<option>Handmade Botanicals</option>
+<option>Cotton Archive</option>
+<option>Minimalist Grains</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-sm uppercase text-on-surface-variant">Product Description</label>
+<textarea class="w-full bg-transparent border-b border-primary-container focus:ring-0 focus:border-primary focus:bg-primary-container/5 transition-all p-3" placeholder="Describe the tactile sensation and ink absorption..." rows="3"></textarea>
+</div>
+<div class="space-y-4">
+<label class="text-label-sm uppercase text-on-surface-variant">Variant Configuration (GSM / Texture)</label>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-label-sm flex items-center gap-2">
+                                    Rough Grain <span class="material-symbols-outlined text-xs">close</span>
+</span>
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-label-sm flex items-center gap-2">
+                                    Cold Pressed <span class="material-symbols-outlined text-xs">close</span>
+</span>
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-label-sm flex items-center gap-2">
+                                    150gsm <span class="material-symbols-outlined text-xs">close</span>
+</span>
+<button class="px-4 py-2 border border-dashed border-primary-container text-primary rounded-full text-label-sm flex items-center gap-2 hover:bg-sky-50 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span> Add Variant
+                                </button>
+</div>
+</div>
+<div class="pt-6 flex justify-end">
+<button class="bg-primary text-white px-10 py-4 rounded-lg font-medium shadow-lg hover:brightness-110 transition-all" type="submit">Publish to Archive</button>
+</div>
+</form>
+</div>
+<!-- Product Live Preview -->
+<div class="bg-white/50 border border-sky-100 p-8 rounded-xl backdrop-blur-sm">
+<h4 class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">visibility</span> Live Preview
+                    </h4>
+<div class="grid grid-cols-2 gap-8 items-center">
+<div class="relative aspect-square rounded-lg overflow-hidden inner-stroke group">
+<img class="w-full h-full object-cover" data-alt="close-up of textured white artisanal paper with visible natural fibers and soft deckled edges in bright natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQOqrcr6xN9HS_yd3rUcA2lscbFM5MyOJpoeViwBzdoe78WKyKdxkkBDtrrpQsf40HsCG8AC_Bmjtz6mB0GcAkf0A3C9obJAh-M9725HHU_8CnY7WR87Oxf4jtIu1wmBOiUspoxeCf5BcEfkHVQqSwGTvbf-RjRw8W8_Yww9WM1bmr7gSeOe_pNj9l-JqLTeX1GX8biRR0x1qpHO__3glnEipMJYXEhUHrplG_vgVEqDt4LSmn-GmJVGwsvOKSAySXJJZmy4-e1EY"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+</div>
+<div class="space-y-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-tighter">New Entry</span>
+<h2 class="text-h3 font-h3">Handmade Indigo Rag</h2>
+<p class="text-body-md text-on-surface-variant">320gsm · Deckled Edge · Cold Pressed</p>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm ml-2">(42 Reviews)</span>
+</div>
+<p class="text-h3 font-h2 text-primary">$48.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Management Table -->
+<div class="col-span-12 lg:col-span-5">
+<div class="bg-surface-container-lowest paper-texture p-0 rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.1)] overflow-hidden">
+<div class="p-8 border-b border-sky-100 flex justify-between items-center">
+<h3 class="font-h3 text-h3">Inventory List</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="pl-10 pr-4 py-2 border border-primary-container bg-transparent rounded-full text-label-sm w-48 focus:w-64 transition-all" placeholder="Filter archive..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-8 py-4 text-label-sm uppercase text-on-surface-variant">Product</th>
+<th class="px-4 py-4 text-label-sm uppercase text-on-surface-variant">Stock</th>
+<th class="px-4 py-4 text-label-sm uppercase text-on-surface-variant">Price</th>
+<th class="px-8 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-sky-50">
+<tr class="hover:bg-sky-50/50 transition-colors">
+<td class="px-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden inner-stroke">
+<img class="w-full h-full object-cover" data-alt="extreme close-up of charcoal grey watercolor paper texture showing deep tooth and fibers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUN0_3r3Hox9Vt8WMmy7HLPFCUCFh8NM_FzZs4Av_vZD_DMVExG7ESXbS4ZpiLKQdmdjrB2H3kxvk9_-oqgZYFdXL5f9tdziUkcrOwewPMfA1HglJS6p6apCi4D5XcGyLTShGCU8S-RZNPvvbb8VUjkle2OSHMDQUcbiFCo9vrApegm0uSJn1bhoytAkooNu8chu9XEnjtWInQKkLmXo00di0ZmKr1b8yBG8TuMdB8oOY979xADTvyNFX1OngFMhKlXH7-74xlpJY"/>
+</div>
+<div>
+<p class="font-medium text-on-surface">Cotton Cloud 300</p>
+<p class="text-xs text-on-surface-variant">Minimalist Grains</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary-container font-bold text-xs rounded">142 units</span>
+</td>
+<td class="px-4 py-4 text-on-surface font-medium">$32.00</td>
+<td class="px-8 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-sky-50/50 transition-colors">
+<td class="px-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden inner-stroke">
+<img class="w-full h-full object-cover" data-alt="pale cream textured artist paper with slight shimmer and natural organic edges on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUNedNCoP2z3JGyeK2dOIfauyTBSP7Mb6-cJiectSuD--Mks1N98OhcItmEwOQtKM57O16SXPW3sQ5pxLWkmkH8EjAN7Q118HISU1dMn_Q1PhH9jrulm0-wndbKZdDQ-4NWVcK7R-F6JSi_Tfg7ZCuTECo7-dqT-Sz-RfyH2WiNrzhVEZgEYk7FFsf8eTLyu6OrJMzQtqRT2GyPMWwUYEtVqJ4lmPVB-AH7VP91aEE3DOyFDFV1scO0yWPwC0ii2rRgdKWlKGChu8"/>
+</div>
+<div>
+<p class="font-medium text-on-surface">Petal Infused Rag</p>
+<p class="text-xs text-on-surface-variant">Handmade Botanicals</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-error-container text-on-error-container font-bold text-xs rounded">Low: 12 units</span>
+</td>
+<td class="px-4 py-4 text-on-surface font-medium">$54.00</td>
+<td class="px-8 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-sky-50/50 transition-colors">
+<td class="px-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden inner-stroke">
+<img class="w-full h-full object-cover" data-alt="warm beige recycled paper with visible brown flecks and a smooth matte finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwTauDN3F2N40vOwpVWIzCK9LaBcTUYXRhFS5PROO44MkQZ-khWByJPlWuIl_pTF8_i43AkII-er6Ux4SrU2y_w3dc_8UkMJO_RRAg1C48RXZTLgsz_Ra_mQxP8Y-8e496RHBk1eoT9nK9N7ti_W6GL_WlfO9EyrY7CPSRFXg7-C4uo0jEHezbKwFsxseRVfHptJdJhVHygQo8wjJsX8jNS-spn6mxGJoFzy2bQg7s8fDJZK6i1KolA4HDYNiZ9NpH80JS4kct91U"/>
+</div>
+<div>
+<p class="font-medium text-on-surface">Sustainable Hemp</p>
+<p class="text-xs text-on-surface-variant">Eco Archive</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary-container font-bold text-xs rounded">89 units</span>
+</td>
+<td class="px-4 py-4 text-on-surface font-medium">$28.00</td>
+<td class="px-8 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-sky-50/50 transition-colors">
+<td class="px-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden inner-stroke">
+<img class="w-full h-full object-cover" data-alt="stark white heavy-duty art paper with a subtle press pattern and crisp edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH5erQaEVjzmah8llhsCJqwsgVKgl-hdCMW6MAl1dO_8C-1PcSgCYMS0mFAwsLADBWdfWHhjEIoX6Wq_Ai2pAv33qoza8XpZrKE3ExjwI5ctwM27S6wcxcJ-q2IsJtZVLeYkocqBJZIz4i-qdB923ALewTpfnm1qzLyRhcDY_Ws813YU1_oy2Kf_EBYCQ1FBx7sZvQ-5YxPrWcSq50U5fISxJaLHgKE_80XM-VCV7kVZ6kvxqo51iRcVNUk77bUuy98fSErHuWCXU"/>
+</div>
+<div>
+<p class="font-medium text-on-surface">Arctic Press XL</p>
+<p class="text-xs text-on-surface-variant">Minimalist Grains</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary-container font-bold text-xs rounded">200+ units</span>
+</td>
+<td class="px-4 py-4 text-on-surface font-medium">$19.00</td>
+<td class="px-8 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-8 border-t border-sky-50 flex justify-center">
+<button class="text-primary font-medium text-label-sm hover:underline decoration-primary-container underline-offset-4">View All Products in Archive</button>
+</div>
+</div>
+</div>
+</div>
+</main>

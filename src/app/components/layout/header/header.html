@@ -1,0 +1,26 @@
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm border-b border-sky-100/50 dark:border-zinc-800 shadow-[0_4px_20px_-2px_rgba(167,199,231,0.15)]">
+<div class="flex justify-between items-center max-w-[1440px] mx-auto px-12 h-20">
+<div class="flex items-center gap-12">
+<button class="p-2 hover:bg-sky-50/50 rounded-full transition-all duration-300" (click)="toggleSidebar.emit()">
+<span class="material-symbols-outlined text-on-surface-variant">menu</span>
+</button>
+<span class="text-2xl font-semibold tracking-tighter text-zinc-900 dark:text-white font-['Epilogue']">PapeisArtisticos</span>
+<nav class="hidden md:flex items-center gap-8 font-['Epilogue'] tracking-tight font-light">
+<a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">Collections</a>
+<a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">New Arrivals</a>
+<a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">Paper Studio</a>
+<a class="text-zinc-900 dark:text-white border-b-2 border-sky-200 pb-1 font-medium" href="#">The Archive</a>
+<a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">About Us</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="p-2 hover:bg-sky-50/50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined text-on-surface-variant">shopping_bag</span>
+</button>
+<button class="p-2 hover:bg-sky-50/50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</button>
+</div>
+</div>
+</header>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Capa } from '../capa/capa';
 import { Sketchbook } from '../../models/sketchbook.model';
 import { SketchbookService } from '../../services/sketchbook.service';
@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { Header } from '../layout/header/header';
+import { Sidebar } from '../layout/sidebar/sidebar';
+import { Footer } from '../layout/footer/footer';
 
 
 export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
@@ -49,7 +52,10 @@ export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
     RouterLink,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    Header,
+    Sidebar,
+    Footer
   ],
 
   templateUrl: './sketchbook.html',
@@ -59,10 +65,13 @@ export class SketchbookComponent implements OnInit {
 
   totalRecords: number = 0;
   page = 0;
-  pageSize = 2;
+  pageSize = 4;
+  isSidebarOpen = signal(true);
 
   listaOriginal: Sketchbook[] = [];
   listaFiltrada: Sketchbook[] = [];
+  sketchbooks = signal<Sketchbook[]>([]);
+  displayedItems = signal<Sketchbook[]>([]);
 
   readonly dialog = inject(MatDialog);
   readonly fb = inject(FormBuilder);
@@ -93,6 +102,8 @@ export class SketchbookComponent implements OnInit {
         this.listaOriginal = response.data;
         this.listaFiltrada = response.data;
         this.dataSource.data = response.data;
+        this.sketchbooks.set(response.data);
+        this.displayedItems.set(response.data);
         this.totalRecords = response.total;
       },
       error: err => {
@@ -107,6 +118,20 @@ export class SketchbookComponent implements OnInit {
     this.carregarDados(); // ✅ correto
   }
 
+  previousPage(): void {
+    if (this.page > 0) {
+      this.page--;
+      this.carregarDados();
+    }
+  }
+
+  nextPage(): void {
+    if ((this.page + 1) * this.pageSize < this.totalRecords) {
+      this.page++;
+      this.carregarDados();
+    }
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -116,7 +141,12 @@ export class SketchbookComponent implements OnInit {
     this.sketchbookService.findByNome(this.termoBusca).subscribe(data => {
       this.listaFiltrada = data;
       this.dataSource.data = data;
+      this.displayedItems.set(data);
     });
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen.set(!this.isSidebarOpen());
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
