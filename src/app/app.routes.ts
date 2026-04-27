@@ -10,20 +10,20 @@ import { SketchbookForm } from './components/sketchbook-form/sketchbook-form';
 import { TemplateAdm } from './components/layout/template-adm/template-adm';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: TemplateAdm, title: 'Dashboard' },
-  { path: 'sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
-  { path: 'sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
+  { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
+  { path: 'admin/dashboard', component: TemplateAdm, title: 'Dashboard' },
+  { path: 'admin/sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
+  { path: 'admin/sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
   {
-    path: 'sketchbooks/:id',
+    path: 'admin/sketchbooks/:id',
     component: SketchbookEdit,
     title: 'Editar Sketchbook',
     resolve: { sketchbook: sketchbookResolver },
   },
-  { path: 'blocos', component: BlocoListComponent, title: 'Blocos' },
-  { path: 'blocos/new', component: BlocoForm, title: 'Adicionar Bloco' },
+  { path: 'admin/blocos', component: BlocoListComponent, title: 'Blocos' },
+  { path: 'admin/blocos/new', component: BlocoForm, title: 'Adicionar Bloco' },
   {
-    path: 'blocos/:id',
+    path: 'admin/blocos/:id',
     component: BlocoEdit,
     title: 'Editar Bloco',
     resolve: { bloco: blocoResolver },
