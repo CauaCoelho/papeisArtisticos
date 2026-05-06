@@ -92,7 +92,7 @@ export class SketchbookForm implements OnInit {
 
     resultado.subscribe({
       next: (obj) => {
-        this.router.navigateByUrl('/sketchbooks');
+        this.router.navigateByUrl('/admin/sketchbooks');
         this.exibirMensagem('Sketchbook salvo com sucesso!');
       },
       error: (err) => {

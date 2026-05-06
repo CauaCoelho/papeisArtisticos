@@ -66,7 +66,7 @@ export class SketchbookEdit implements OnInit {
     this.sketchbookService.update(<any>this.form.value).subscribe({
       next: () => {
         alert('Sketchbook atualizado com sucesso!');
-        this.router.navigate(['/sketchbooks']);
+        this.router.navigate(['/admin/sketchbooks']);
       },
       error: (err) => {
         console.error('Erro ao atualizar sketchbook:', err);

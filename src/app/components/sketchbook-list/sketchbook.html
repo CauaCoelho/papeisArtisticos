@@ -12,7 +12,7 @@
           <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Gerencie sua coleção premium de sketchbooks
             artísticos. Edite detalhes, acompanhe os níveis de estoque e atualize as especificações do papel.</p>
         </div>
-        <button routerLink="/sketchbooks/new"
+        <button routerLink="/admin/sketchbooks/new"
           class="flex items-center gap-2 bg-primary text-on-primary font-epilogue font-semibold py-3 px-6 rounded-lg shadow-[0_4px_0_0_#294964] hover:translate-y-[1px] hover:shadow-[0_3px_0_0_#294964] active:translate-y-[4px] active:shadow-none transition-all">
           <span class="material-symbols-outlined">add_circle</span>
           Adicionar novo sketchbook
@@ -69,10 +69,10 @@
               </td>
               <td class="px-6 py-5">
                 <span
-                  class="px-3 py-1 bg-primary-container/20 text-on-primary-container text-xs font-semibold rounded-full">Padrão</span>
+                  class="px-3 py-1 bg-primary-container/20 text-on-primary-container text-xs font-semibold rounded-full">{{ $any(sketchbook.textura)?.nome || sketchbook.textura || 'Sem textura' }}</span>
               </td>
               <td class="px-6 py-5 text-zinc-600 font-medium">{{ sketchbook.quantidadeFolhas }} Páginas</td>
-              <td class="px-6 py-5 text-zinc-600 font-medium">{{ sketchbook.capa?.material || 'Padrão' }}</td>
+              <td class="px-6 py-5 text-zinc-600 font-medium">{{ sketchbook.capa?.nome || 'Padrão' }}</td>
               <td class="px-6 py-5">
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
@@ -81,7 +81,7 @@
               </td>
               <td class="px-6 py-5 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button [routerLink]="['/sketchbooks', sketchbook.id]"
+                  <button [routerLink]="['/admin/sketchbooks', sketchbook.id]"
                     class="p-2 text-zinc-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined text-xl">edit</span>
                   </button>
