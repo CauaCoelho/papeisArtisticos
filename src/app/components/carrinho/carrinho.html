@@ -1,0 +1,21 @@
+@for (item of itens; track item.varianteProdutoId) {
+<div>
+
+    <h3>{{ item.nomeProduto }}</h3>
+
+    <p>{{ item.formato }}</p>
+
+    <p>{{ item.gramatura }}g</p>
+
+    <p>Qtd: {{ item.quantidade }}</p>
+
+    <p>R$ {{ item.preco }}</p>
+
+</div>
+} @empty {
+<p>O carrinho está vazio.</p>
+}
+
+<button (click)="finalizarCompra()">
+    Finalizar Compra
+</button>
