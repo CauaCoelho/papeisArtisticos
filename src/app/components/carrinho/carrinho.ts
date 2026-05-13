@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { CarrinhoItem } from '../../models/carrinho-item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrinho',
@@ -9,18 +10,18 @@ import { CarrinhoItem } from '../../models/carrinho-item.model';
   styleUrl: './carrinho.css',
 })
 export class Carrinho {
-  constructor(private carrinhoService: CarrinhoService) { }
+  varianteSelecionada: any;
+  produto: any;
+  constructor(private carrinhoService: CarrinhoService,
+    private router: Router
+  ) {
+
+  }
 
   get itens(): CarrinhoItem[] {
     return this.carrinhoService.listar();
   }
 
-  /* 
-   * TODO: Este método foi comentado pois `varianteSelecionada` e `produto` 
-   * não existem no componente de Carrinho. Ele deve ser movido para o 
-   * componente ProdutoDetail (ou similar).
-   */
-  /*
   adicionarAoCarrinho() {
     this.carrinhoService.adicionar({
       varianteProdutoId: this.varianteSelecionada.id,
@@ -32,10 +33,15 @@ export class Carrinho {
       quantidade: 1
     });
   }
-  */
+
+  mostrarResumoCompra() {
+
+  }
 
   finalizarCompra() {
     console.log('Compra finalizada!');
     this.carrinhoService.limpar();
+    this.router.navigateByUrl('/home');
+
   }
 }

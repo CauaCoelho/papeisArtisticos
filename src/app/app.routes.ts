@@ -8,6 +8,8 @@ import { blocoResolver } from './components/resolvers/bloco-resolver';
 import { SketchbookEdit } from './components/sketchbook-edit/sketchbook-edit';
 import { SketchbookForm } from './components/sketchbook-form/sketchbook-form';
 import { TemplateAdm } from './components/layout/template-adm/template-adm';
+import { Carrinho } from './components/carrinho/carrinho';
+import { Home } from './components/home/home';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
@@ -28,4 +30,8 @@ export const routes: Routes = [
     title: 'Editar Bloco',
     resolve: { bloco: blocoResolver },
   },
-];
+  { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
+  { path: 'login', component: NavigatorLogin, title: 'Login' },
+  { path: 'home', component: Home, title: 'Tela inicial' }
+]
+  ;
