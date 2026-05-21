@@ -10,6 +10,7 @@ import { SketchbookForm } from './components/sketchbook-form/sketchbook-form';
 import { TemplateAdm } from './components/layout/template-adm/template-adm';
 import { Carrinho } from './components/carrinho/carrinho';
 import { Home } from './components/home/home';
+import { ProdutoDetail } from './components/produto-detail/produto-detail';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
@@ -32,6 +33,7 @@ export const routes: Routes = [
   },
   { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
   { path: 'login', component: NavigatorLogin, title: 'Login' },
-  { path: 'home', component: Home, title: 'Tela inicial' }
+  { path: 'home', component: Home, title: 'Tela inicial' },
+  { path: 'produtos/:id', component: ProdutoDetail, title: 'Detalhes do Produto' }
 ]
   ;

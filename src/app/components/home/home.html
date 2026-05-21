@@ -1,1 +1,40 @@
-<p>home works!</p>
+<div class="home-container">
+  <div class="hero-section">
+    <h1>Descubra os Melhores Papéis Artísticos</h1>
+    <p>A mais fina seleção para sua criatividade fluir, com cores vibrantes e texturas únicas.</p>
+    <div class="search-bar">
+      <mat-icon>search</mat-icon>
+      <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()" placeholder="Busque por nome, marca ou textura..." />
+    </div>
+  </div>
+
+  <div class="produtos-grid">
+    @for (produto of produtosFiltrados; track produto.id) {
+      <div class="produto-card" [routerLink]="['/produtos', produto.id]">
+        <div class="card-image">
+          <img [src]="produto.imagemUrl" [alt]="produto.nome" />
+          <div class="card-overlay">
+            <mat-icon>visibility</mat-icon>
+            <span>Ver Detalhes</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="marca-badge">{{produto.marca?.nome || 'Marca Genérica'}}</div>
+          <h3 class="produto-nome">{{produto.nome}}</h3>
+          <p class="produto-preco">{{produto.preco | currency:'BRL'}}</p>
+        </div>
+        <div class="card-actions">
+          <button mat-flat-button class="add-to-cart-btn" (click)="adicionarAoCarrinho(produto, $event)">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Comprar
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="no-results">
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+        <p>Nenhum produto encontrado para sua busca.</p>
+      </div>
+    }
+  </div>
+</div>

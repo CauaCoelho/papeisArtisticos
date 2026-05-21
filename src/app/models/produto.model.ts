@@ -10,4 +10,7 @@ export abstract class Produto {
     formato!: Formato;
     especificacaoTecnica!: EspecificacaoTecnica;
     marca!: Marca;
+    // Optional UI fields
+    preco?: number;
+    imagemUrl?: string;
 }
