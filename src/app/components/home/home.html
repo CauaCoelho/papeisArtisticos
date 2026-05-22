@@ -4,13 +4,18 @@
     <p>A mais fina seleção para sua criatividade fluir, com cores vibrantes e texturas únicas.</p>
     <div class="search-bar">
       <mat-icon>search</mat-icon>
-      <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()" placeholder="Busque por nome, marca ou textura..." />
+      <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()"
+        placeholder="Busque por nome, marca ou textura..." />
     </div>
   </div>
 
   <div class="produtos-grid">
-    @for (produto of produtosFiltrados; track produto.id) {
-      <div class="produto-card" [routerLink]="['/produtos', produto.id]">
+    <div *ngIf="errorMessage()" style="grid-column: 1 / -1; color: #ba1a1a; padding: 20px; background: #ffdad6; border-radius: 8px; font-weight: 500; text-align: center;">
+      Ops! Falha ao carregar os produtos: {{ errorMessage() }}
+    </div>
+
+    <ng-container *ngIf="produtosFiltrados().length > 0; else noProducts">
+      <div class="produto-card" *ngFor="let produto of produtosFiltrados(); trackBy: trackByProdutoId" [routerLink]="['/produtos', produto.id]">
         <div class="card-image">
           <img [src]="produto.imagemUrl" [alt]="produto.nome" />
           <div class="card-overlay">
@@ -30,11 +35,13 @@
           </button>
         </div>
       </div>
-    } @empty {
+    </ng-container>
+
+    <ng-template #noProducts>
       <div class="no-results">
         <mat-icon>sentiment_dissatisfied</mat-icon>
         <p>Nenhum produto encontrado para sua busca.</p>
       </div>
-    }
+    </ng-template>
   </div>
 </div>
