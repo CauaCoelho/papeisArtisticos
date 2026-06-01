@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+  padding-top: 80px;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}

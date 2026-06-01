@@ -1,0 +1,10 @@
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<div class="content">
+  @if (isSidebarOpen()) {
+    <app-sidebar></app-sidebar>
+  }
+  <main>
+    <app-dashboard></app-dashboard>
+  </main>
+</div>
+<app-footer></app-footer>

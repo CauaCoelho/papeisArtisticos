@@ -42,7 +42,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class SketchbookForm implements OnInit {
-  readonly capa = inject(Capa);
   readonly dialog = inject(MatDialog);
   readonly form: FormGroup;
   capas: Capa[] = [];
@@ -93,7 +92,7 @@ export class SketchbookForm implements OnInit {
 
     resultado.subscribe({
       next: (obj) => {
-        this.router.navigateByUrl('/sketchbooks');
+        this.router.navigateByUrl('/admin/sketchbooks');
         this.exibirMensagem('Sketchbook salvo com sucesso!');
       },
       error: (err) => {

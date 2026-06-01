@@ -1,28 +1,39 @@
 import { Routes } from '@angular/router';
 import { SketchbookComponent } from './components/sketchbook-list/sketchbook';
-import { sketchbookResolver } from './components/resolvers/papel-resolver';
+import { sketchbookResolver } from './components/resolvers/sketchbook-resolver';
 import { BlocoListComponent } from './components/bloco-list/bloco-list';
 import { BlocoForm } from './components/bloco-form/bloco-form';
 import { BlocoEdit } from './components/bloco-edit/bloco-edit';
 import { blocoResolver } from './components/resolvers/bloco-resolver';
 import { SketchbookEdit } from './components/sketchbook-edit/sketchbook-edit';
 import { SketchbookForm } from './components/sketchbook-form/sketchbook-form';
+import { TemplateAdm } from './components/layout/template-adm/template-adm';
+import { Carrinho } from './components/carrinho/carrinho';
+import { Home } from './components/home/home';
+import { ProdutoDetail } from './components/produto-detail/produto-detail';
 
 export const routes: Routes = [
-  { path: 'sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
-  { path: 'sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
+  { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
+  { path: 'admin/dashboard', component: TemplateAdm, title: 'Dashboard' },
+  { path: 'admin/sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
+  { path: 'admin/sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
   {
-    path: 'sketchbooks/:id',
+    path: 'admin/sketchbooks/:id',
     component: SketchbookEdit,
     title: 'Editar Sketchbook',
     resolve: { sketchbook: sketchbookResolver },
   },
-  { path: 'blocos', component: BlocoListComponent, title: 'Blocos' },
-  { path: 'blocos/new', component: BlocoForm, title: 'Adicionar Bloco' },
+  { path: 'admin/blocos', component: BlocoListComponent, title: 'Blocos' },
+  { path: 'admin/blocos/new', component: BlocoForm, title: 'Adicionar Bloco' },
   {
-    path: 'blocos/:id',
+    path: 'admin/blocos/:id',
     component: BlocoEdit,
     title: 'Editar Bloco',
     resolve: { bloco: blocoResolver },
   },
-];
+  { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
+  { path: 'login', component: NavigatorLogin, title: 'Login' },
+  { path: 'home', component: Home, title: 'Tela inicial' },
+  { path: 'produtos/:id', component: ProdutoDetail, title: 'Detalhes do Produto' }
+]
+  ;

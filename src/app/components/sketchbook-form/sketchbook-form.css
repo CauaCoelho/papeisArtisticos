@@ -1,21 +1,46 @@
-
-/* Define que o título da toolbar:
-   - usa flexbox
-   - centraliza horizontalmente o conteúdo
-   - aumenta o tamanho da fonte */
-.toolbar-title {
-    display: flex;
-    justify-content: center;
-    font-size: x-large;
+.mat-toolbar {
+  margin-bottom: 16px;
 }
 
-/* Define o estilo do componente host (a raiz do componente Angular):
-   - exibido como bloco (block)
-   - aplica espaçamento interno (padding) que varia conforme a largura da tela
-     usando clamp (mín: 12px, preferido: 2vw, máx: 24px) */
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbartitle {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.top-bar,
+.busca-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+table {
+  width: 100%;
+}
+
+
+.filtro {
+  flex: 1;
+}
+
 :host {
   display: block;
   padding: clamp(12px, 2vw, 24px);
+}
+
+.full-width-input {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 /* Estiliza os cartões:
@@ -23,40 +48,25 @@
    - arredondamento dos cantos (9px) */
 .card {
   max-width: 100%;
-  /* margin-inline: auto; */ /* centralizaria horizontalmente se ativado */
+  /* margin-inline: auto; */
+  /* centralizaria horizontalmente se ativado */
   border-radius: 18px;
 }
 
-/* Define um layout de formulário em grid:
-   - espaçamento entre os elementos = 16px
-   - margem superior de 8px */
-.form {
-  display: grid;
-  gap: 16px;
-  margin-top: 8px;
+::placeholder {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
-/* Define grid com duas colunas:
-   - primeira coluna flexível (1fr)
-   - segunda coluna fixa em 160px
-   - espaçamento entre colunas de 16px */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
-/* Responsividade: 
-   - quando a tela for menor que 640px, a grid passa a ter apenas 1 coluna */
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Faz com que os campos de formulário Material ocupem 100% da largura */
-mat-form-field {
-  width: 100%;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* Área de ações (botões, etc.):
@@ -74,25 +84,36 @@ mat-form-field {
 /* Botões com estilo flat (preenchidos):
    - cantos arredondados (12px)
    - espaçamento horizontal maior (18px) */
-button[mat-flat-button] {
+button[mat-fab] {
   border-radius: 12px;
   padding-inline: 18px;
 }
 
-/* Botões com estilo stroked (com borda):
-   - apenas cantos arredondados (12px) */
-button[mat-stroked-button] {
-  border-radius: 12px;
+
+button[mat-raised-button] {
+  margin-left: auto;
+  width: 120px;
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 24px;
 }
 
-/* Estilo do título dentro do mat-card:
-   - texto em negrito (700)
-   - espaçamento extra entre letras (0.2px)
-   - dá mais destaque ao título */
-mat-card-title {
-  font-weight: 700;
-  letter-spacing: 0.2px;
+button[mat-raised-button]:not(:last-child) {
+  margin-right: 1rem;
+  background-color: #303f9f;
 }
-button {
-  margin-right: 8px;
+
+
+.busca-input {
+  flex: 1;
+}
+
+
+
+/* Responsividade: 
+   - quando a tela for menor que 640px, a grid passa a ter apenas 1 coluna */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

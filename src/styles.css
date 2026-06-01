@@ -1,1 +1,174 @@
 /* You can add global styles to this file, and also import other style files */
+/* =========================
+   DESIGN TOKENS
+========================= */
+:root {
+  /* COLORS */
+  --color-primary: #42617d;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #a7c7e7;
+
+  --color-secondary: #e8e883;
+  --color-on-secondary: #67680f;
+
+  --color-bg: #faf9fb;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f4f3f6;
+
+  --color-text: #1a1c1e;
+  --color-text-muted: #42474d;
+
+  --color-outline: #c2c7ce;
+
+  /* TYPOGRAPHY */
+  --font-heading: 'Epilogue', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+
+  /* SPACING */
+  --space-xs: 4px;
+  --space-sm: 12px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 80px;
+
+  /* BORDER RADIUS */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* SHADOW */
+  --shadow-soft: 0 10px 30px rgba(167, 199, 231, 0.15);
+  --shadow-hover: 0 12px 40px rgba(167, 199, 231, 0.25);
+}
+
+/* =========================
+   BASE
+========================= */
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1 {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 500;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.text-lg {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.text-md {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.paper-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD13Gb1qVjB2zF5mSOw-EieZNy5aBlBq2ZtZ00Q4u1uk4AGXSdtPoPI6oa_mc5pHnpJWOCg4V5Cep8ADFAYg5fVlbtrr_VJGR4CC8sYKxx2ysO2aCW9xRYsy_1IZ_X6ZrjMycv-38DVrIl1sjt8JHR1Bf4MZszTtDnnZD0DHvxBbYKPTUtMM7_OHSAWxt74ZO8N8XcpuS_TQxOVes1ULJo4bxFnttQLnhuK9oXR2YxCZtWK114IwtCLh0KTZYTsMiBqfwMiUkNJRZU);
+    background-repeat: repeat
+    }
+.inner-stroke {
+    box-shadow: inset 0 0 0 1px rgba(66, 97, 125, 0.1)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  margin-bottom: var(--space-xl);
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+
+/* PRODUCT CARD */
+.product-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.2s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+/* textura leve */
+.product-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url('/assets/noise.png');
+}
+
+/* BUTTON (fallback se não usar Material) */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+/* FILTER CHIP */
+.filter-chip {
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid var(--color-outline);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter-chip.active {
+  background: var(--color-secondary);
+  color: var(--color-on-secondary);
+  border: none;
+}
+
+/* INPUT BASE */
+.input-minimal {
+  border: none;
+  border-bottom: 1px solid var(--color-primary);
+  background: transparent;
+  padding: 8px 4px;
+  outline: none;
+}
+
+.input-minimal:focus {
+  background: rgba(66, 97, 125, 0.05);
+}

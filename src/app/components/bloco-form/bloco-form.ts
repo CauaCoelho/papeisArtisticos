@@ -80,7 +80,7 @@ export class BlocoForm implements OnInit {
 
     operacao.subscribe({
       next: () => {
-        this.router.navigateByUrl('/blocos');
+        this.router.navigateByUrl('/admin/blocos');
         this.snack.open('Bloco salvo com sucesso!', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'center',

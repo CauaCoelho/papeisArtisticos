@@ -1,0 +1,126 @@
+@if (!loading && produto) {
+<div class="detail-container">
+  
+  <div class="breadcrumb">
+    <a routerLink="/home">Home</a> &gt; <span>{{produto.nome}}</span>
+  </div>
+
+  <div class="product-layout">
+    <!-- Gallery -->
+    <div class="gallery-section">
+      <div class="main-image">
+        <img [src]="imagemPrincipal" [alt]="produto.nome">
+      </div>
+      <div class="thumbnail-list">
+        @for (img of imagens; track img) {
+          <img [src]="img" 
+               [class.active]="img === imagemPrincipal"
+               (click)="alterarImagemPrincipal(img)">
+        }
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="info-section">
+      <div class="marca-chip">{{produto.marca?.nome}}</div>
+      <h1 class="product-title">{{produto.nome}}</h1>
+      <p class="product-price">{{produto.preco | currency:'BRL'}}</p>
+
+      <div class="divider"></div>
+
+      <!-- Specs short -->
+      <div class="quick-specs">
+        @if (produto.formato) {
+          <div class="spec-item">
+            <mat-icon>aspect_ratio</mat-icon>
+            <span>{{produto.formato}}</span>
+          </div>
+        }
+        @if (produto.textura) {
+          <div class="spec-item">
+            <mat-icon>texture</mat-icon>
+            <span>Textura: {{produto.textura}}</span>
+          </div>
+        }
+      </div>
+
+      <div class="cart-action-box">
+        <div class="quantity-selector">
+          <button mat-icon-button (click)="decrementarQuantidade()" [disabled]="quantidade <= 1">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="quantity-value">{{quantidade}}</span>
+          <button mat-icon-button (click)="incrementarQuantidade()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        
+        <button mat-flat-button class="main-add-cart-btn" (click)="adicionarAoCarrinho()">
+          <mat-icon>shopping_cart</mat-icon> Adicionar ao Carrinho
+        </button>
+      </div>
+
+      <div class="shipping-info">
+        <mat-icon>local_shipping</mat-icon>
+        <span>Frete grátis para compras acima de R$ 300,00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Specs Tabs -->
+  @if (produto.especificacaoTecnica) {
+    <div class="technical-specs-section">
+      <h2>Especificações Técnicas</h2>
+      <div class="specs-grid">
+        @if (produto.especificacaoTecnica.ph) {
+          <div class="spec-box">
+            <span class="spec-label">pH</span>
+            <span class="spec-value">{{produto.especificacaoTecnica.ph}}</span>
+          </div>
+        }
+        @if (produto.especificacaoTecnica.opacidade) {
+          <div class="spec-box">
+            <span class="spec-label">Opacidade</span>
+            <span class="spec-value">{{produto.especificacaoTecnica.opacidade}}%</span>
+          </div>
+        }
+        @if (produto.especificacaoTecnica.absorcao) {
+          <div class="spec-box">
+            <span class="spec-label">Absorção</span>
+            <span class="spec-value">{{produto.especificacaoTecnica.absorcao}}%</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Similar Products -->
+  @if (produtosSemelhantes.length > 0) {
+    <div class="similar-products-section">
+      <h2>Você também pode gostar</h2>
+      <div class="produtos-grid">
+        @for (sim of produtosSemelhantes; track sim.id) {
+          <div class="produto-card" [routerLink]="['/produtos', sim.id]">
+            <div class="card-image">
+              <img [src]="sim.imagemUrl" [alt]="sim.nome" />
+            </div>
+            <div class="card-content">
+              <div class="marca-badge">{{sim.marca?.nome || 'Marca'}}</div>
+              <h3 class="produto-nome">{{sim.nome}}</h3>
+              <p class="produto-preco">{{sim.preco | currency:'BRL'}}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+</div>
+}
+
+@if (loading) {
+<div class="loading-state">
+  <mat-icon class="spinner">sync</mat-icon>
+  <p>Carregando detalhes do produto...</p>
+</div>
+}

@@ -58,7 +58,7 @@ export class BlocoEdit implements OnInit {
     this.blocoService.update(this.form.value as Bloco).subscribe({
       next: () => {
         alert('Bloco atualizado com sucesso!');
-        this.router.navigate(['/blocos']);
+        this.router.navigate(['/admin/blocos']);
       },
       error: (err) => {
         console.error('Erro ao atualizar bloco:', err);

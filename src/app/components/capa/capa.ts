@@ -1,4 +1,6 @@
 export class Capa {
- 
-  constructor() {}
+  material?: string;
+  cor?: string;
+  textura?: string;
+  constructor() { }
 }

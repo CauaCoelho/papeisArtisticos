@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SketchbookService } from '../../services/sketchbook.service';
+import { AnimacaoDialog } from '../animacao-dialog/animacao-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sketchbook-edit',
@@ -16,7 +18,7 @@ import { SketchbookService } from '../../services/sketchbook.service';
 })
 
 export class SketchbookEdit implements OnInit {
-
+  readonly dialog = inject(MatDialog);
   readonly form = new FormGroup({
     id: new FormControl<number | null>(null),
     nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -27,7 +29,8 @@ export class SketchbookEdit implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private sketchbookService: SketchbookService,
-    private router: Router
+    private router: Router,
+
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class SketchbookEdit implements OnInit {
     this.sketchbookService.findById(Number(id)).subscribe({
       next: (sketchbook: any) => {
         console.log("Sketchbook encontrado:", sketchbook);
-        
+
         this.form.patchValue({
           id: sketchbook.id,
           nome: sketchbook.nome,
@@ -63,7 +66,7 @@ export class SketchbookEdit implements OnInit {
     this.sketchbookService.update(<any>this.form.value).subscribe({
       next: () => {
         alert('Sketchbook atualizado com sucesso!');
-        this.router.navigate(['/sketchbooks']);
+        this.router.navigate(['/admin/sketchbooks']);
       },
       error: (err) => {
         console.error('Erro ao atualizar sketchbook:', err);
@@ -72,5 +75,13 @@ export class SketchbookEdit implements OnInit {
     });
   }
 
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(AnimacaoDialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      disableClose: true //impedir do usuário fechar o dialog clicando fora ou pressionando ESC
+    })
+  }
 
 }
