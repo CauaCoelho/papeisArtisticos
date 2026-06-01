@@ -13,7 +13,7 @@ import { Home } from './components/home/home';
 import { ProdutoDetail } from './components/produto-detail/produto-detail';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
+ { path: '', redirectTo: '/home', pathMatch: 'full' }, 
   { path: 'admin/dashboard', component: TemplateAdm, title: 'Dashboard' },
   { path: 'admin/sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
   { path: 'admin/sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },

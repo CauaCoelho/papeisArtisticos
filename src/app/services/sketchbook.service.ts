@@ -10,7 +10,7 @@ import { PageResponse } from "../interfaces/page-response.interface";
 export class SketchbookService {
 
   
-  private readonly api = 'http://localhost:8080/sketchbooks';
+  private readonly api = '/sketchbooks';
    
 
   constructor(

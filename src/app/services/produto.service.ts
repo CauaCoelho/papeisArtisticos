@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProdutoService {
 
-  private readonly apiUrl = 'http://localhost:8080/papeis';
+  private readonly apiUrl = '/papeis';
   constructor(private http: HttpClient) {}
   
   findAllProdutos(): Observable<Produto[]> {
