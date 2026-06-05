@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ProdutoService {
 
-  private readonly apiUrl = '/papeis';
-  constructor(private http: HttpClient) {}
-  
+  private readonly apiUrl = 'http://localhost:8080/papeis';
+  constructor(private http: HttpClient) { }
+
   findAllProdutos(): Observable<Produto[]> {
     return this.http.get<Produto[]>(`${this.apiUrl}?_t=${new Date().getTime()}`);
   }
