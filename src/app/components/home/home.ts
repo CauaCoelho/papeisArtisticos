@@ -68,7 +68,7 @@ export class Home implements OnInit {
               nome: p.nome || `${p.marca?.nome || 'Marca Desconhecida'} - ${(p.textura as any)?.nome || p.textura || 'Produto Exclusivo'}`,
               preco: p.preco || 99.90,
               imagemUrl: temImagem
-                ? `/papeis/image/download/${arquivos[0].nomeImagem}`
+                ? `/papeis/image/download/${arquivos[0].fid}`
                 : 'https://via.placeholder.com/300x200?text=Arte+e+Cor'
             };
           });

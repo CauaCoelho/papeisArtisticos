@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -27,8 +27,9 @@ export class ProdutoDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
-    private carrinhoService: CarrinhoService
-  ) {}
+    private carrinhoService: CarrinhoService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -40,34 +41,51 @@ export class ProdutoDetail implements OnInit {
   }
 
   carregarProduto(id: number): void {
+    console.log('carregarProduto chamado com id:', id);
     this.loading = true;
     this.produtoService.findById(id).subscribe({
       next: (data) => {
-        this.produto = {
-          ...data,
-          nome: (data as any).nome || `${(data as any).marca?.nome || 'Marca Desconhecida'} - ${(data as any).textura || 'Produto Exclusivo'}`,
-          preco: (data as any).preco || 99.90, // mock price
-        };
-        
-        // Preparar galeria de imagens
-        if ((data as any).imagens && (data as any).imagens.length > 0) {
-          this.imagens = (data as any).imagens.map((img: any) => `http://localhost:8080/produtos/download/${img.nomeImagem}`);
-        } else {
-          this.imagens = ['https://via.placeholder.com/600x400?text=Imagem+1', 'https://via.placeholder.com/600x400?text=Imagem+2', 'https://via.placeholder.com/600x400?text=Imagem+3'];
-        }
-        this.imagemPrincipal = this.imagens[0];
+        try {
+          this.produto = {
+            ...data,
+            nome: (data as any).nome || `${(data as any).marca?.nome || 'Marca Desconhecida'} - ${(data as any).textura?.nome || 'Produto Exclusivo'}`,
+            preco: (data as any).preco || 99.90,
+            textura: (data as any).textura?.nome || (data as any).textura, // normaliza para string
+          };
 
-        this.carregarProdutosSemelhantes();
-        this.loading = false;
-        window.scrollTo(0, 0); // scroll to top when changing products
+          this.imagens = ((data as any).imagens?.length > 0)
+            ? (data as any).imagens.map((img: any) => `http://localhost:8080/papeis/image/download/${img.fid}`)
+            : ['https://via.placeholder.com/600x400?text=Sem+Imagem'];
+
+          this.imagemPrincipal = this.imagens[0];
+          this.carregarProdutosSemelhantes();
+        } catch (e) {
+          console.error('Erro ao processar dados do produto', e);
+        } finally {
+          this.loading = false;
+          this.cdr.detectChanges();
+        }
       },
       error: (err) => {
         console.error('Erro ao carregar produto', err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
+  uploadImagem(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
 
+    this.produtoService.uploadImagem(this.produto.id, input.files[0])
+      .subscribe({
+        next: () => {
+          alert('Imagem enviada com sucesso!');
+          this.carregarProduto(this.produto.id);
+        },
+        error: (err: any) => console.error('Erro no upload', err)
+      });
+  }
   carregarProdutosSemelhantes(): void {
     this.produtoService.findAllProdutos().subscribe({
       next: (data) => {
@@ -77,9 +95,9 @@ export class ProdutoDetail implements OnInit {
             ...p,
             nome: p.nome || `${p.marca?.nome || 'Marca Genérica'} - ${p.textura || 'Papel'}`,
             preco: (p as any).preco || 89.90,
-            imagemUrl: (p as any).imagens && (p as any).imagens.length > 0 
-                      ? `http://localhost:8080/produtos/download/${(p as any).imagens[0].nomeImagem}`
-                      : 'https://via.placeholder.com/300x200?text=Produto+Semelhante'
+            imagemUrl: (p as any).imagens && (p as any).imagens.length > 0
+              ? `http://localhost:8080/papeis/image/download/${(p as any).imagens[0].fid}`
+              : 'https://via.placeholder.com/300x200?text=Produto+Semelhante'
           }))
           .slice(0, 4); // Take up to 4
         this.produtosSemelhantes = processed;
@@ -105,7 +123,7 @@ export class ProdutoDetail implements OnInit {
     if (!this.produto) return;
 
     this.carrinhoService.adicionar({
-      varianteProdutoId: this.produto.id, 
+      varianteProdutoId: this.produto.id,
       nomeProduto: this.produto.nome,
       formato: this.produto.formato || 'A4',
       gramatura: this.produto.especificacaoTecnica?.gramatura || 180,

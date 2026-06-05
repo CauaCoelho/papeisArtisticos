@@ -13,7 +13,7 @@ import { Home } from './components/home/home';
 import { ProdutoDetail } from './components/produto-detail/produto-detail';
 
 export const routes: Routes = [
- { path: '', redirectTo: '/home', pathMatch: 'full' }, 
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'admin/dashboard', component: TemplateAdm, title: 'Dashboard' },
   { path: 'admin/sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
   { path: 'admin/sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
@@ -34,6 +34,11 @@ export const routes: Routes = [
   { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
   { path: 'login', component: NavigatorLogin, title: 'Login' },
   { path: 'home', component: Home, title: 'Tela inicial' },
-  { path: 'produtos/:id', component: ProdutoDetail, title: 'Detalhes do Produto' }
+  { path: 'produtos/:id', component: ProdutoDetail, title: 'Detalhes do Produto' },
+  {
+    path: 'produtos/:id',
+    component: ProdutoDetail,
+    runGuardsAndResolvers: 'always'
+  }
 ]
   ;
