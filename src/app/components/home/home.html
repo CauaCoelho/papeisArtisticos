@@ -1,47 +1,53 @@
-<div class="home-container">
-  <div class="hero-section">
-    <h1>Descubra os Melhores Papéis Artísticos</h1>
-    <p>A mais fina seleção para sua criatividade fluir, com cores vibrantes e texturas únicas.</p>
-    <div class="search-bar">
-      <mat-icon>search</mat-icon>
-      <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()"
-        placeholder="Busque por nome, marca ou textura..." />
-    </div>
-  </div>
+<app-header></app-header>
 
-  <div class="produtos-grid">
-    <div *ngIf="errorMessage()" style="grid-column: 1 / -1; color: #ba1a1a; padding: 20px; background: #ffdad6; border-radius: 8px; font-weight: 500; text-align: center;">
-      Ops! Falha ao carregar os produtos: {{ errorMessage() }}
+<div class="page-wrapper">
+  <div class="home-container">
+    <div class="hero-section">
+      <h1>Descubra os Melhores Papéis Artísticos</h1>
+      <p>A mais fina seleção para sua criatividade fluir, com cores vibrantes e texturas únicas.</p>
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()"
+          placeholder="Busque por nome, marca ou textura..." />
+      </div>
     </div>
 
-    <ng-container *ngIf="produtosFiltrados().length > 0; else noProducts">
-      <div class="produto-card" *ngFor="let produto of produtosFiltrados(); trackBy: trackByProdutoId" [routerLink]="['/produtos', produto.id]">
-        <div class="card-image">
-          <img [src]="produto.imagemUrl" [alt]="produto.nome" />
-          <div class="card-overlay">
-            <mat-icon>visibility</mat-icon>
-            <span>Ver Detalhes</span>
+    <div class="produtos-grid">
+      <div *ngIf="errorMessage()" style="grid-column: 1 / -1; color: #ba1a1a; padding: 20px; background: #ffdad6; border-radius: 8px; font-weight: 500; text-align: center;">
+        Ops! Falha ao carregar os produtos: {{ errorMessage() }}
+      </div>
+
+      <ng-container *ngIf="produtosFiltrados().length > 0; else noProducts">
+        <div class="produto-card" *ngFor="let produto of produtosFiltrados(); trackBy: trackByProdutoId" [routerLink]="['/produtos', produto.id]">
+          <div class="card-image">
+            <img [src]="produto.imagemUrl" [alt]="produto.nome" />
+            <div class="card-overlay">
+              <mat-icon>visibility</mat-icon>
+              <span>Ver Detalhes</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="marca-badge">{{produto.marca?.nome || 'Marca Genérica'}}</div>
+            <h3 class="produto-nome">{{produto.nome}}</h3>
+            <p class="produto-preco">{{produto.preco | currency:'BRL'}}</p>
+          </div>
+          <div class="card-actions">
+            <button mat-flat-button class="add-to-cart-btn" (click)="adicionarAoCarrinho(produto, $event)">
+              <mat-icon>add_shopping_cart</mat-icon>
+              Comprar
+            </button>
           </div>
         </div>
-        <div class="card-content">
-          <div class="marca-badge">{{produto.marca?.nome || 'Marca Genérica'}}</div>
-          <h3 class="produto-nome">{{produto.nome}}</h3>
-          <p class="produto-preco">{{produto.preco | currency:'BRL'}}</p>
-        </div>
-        <div class="card-actions">
-          <button mat-flat-button class="add-to-cart-btn" (click)="adicionarAoCarrinho(produto, $event)">
-            <mat-icon>add_shopping_cart</mat-icon>
-            Comprar
-          </button>
-        </div>
-      </div>
-    </ng-container>
+      </ng-container>
 
-    <ng-template #noProducts>
-      <div class="no-results">
-        <mat-icon>sentiment_dissatisfied</mat-icon>
-        <p>Nenhum produto encontrado para sua busca.</p>
-      </div>
-    </ng-template>
+      <ng-template #noProducts>
+        <div class="no-results">
+          <mat-icon>sentiment_dissatisfied</mat-icon>
+          <p>Nenhum produto encontrado para sua busca.</p>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>
+
+<app-footer></app-footer>

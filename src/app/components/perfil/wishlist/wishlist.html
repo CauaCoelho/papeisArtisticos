@@ -1,0 +1,46 @@
+<div class="wishlist-container">
+  @if (loading()) {
+    <div class="wishlist-loading">
+      <div class="spinner"></div>
+      <p>Carregando favoritos...</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div class="wishlist-error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage() }}</p>
+      <button mat-flat-button color="primary" (click)="carregarWishlist()">Tentar Novamente</button>
+    </div>
+  } @else if (items().length === 0) {
+    <div class="wishlist-empty">
+      <mat-icon>favorite_border</mat-icon>
+      <h3>Sua lista de desejos está vazia</h3>
+      <p>Navegue pela loja e adicione produtos aos seus favoritos!</p>
+      <button mat-flat-button class="btn-loja" routerLink="/home">Ver Produtos</button>
+    </div>
+  } @else {
+    <div class="wishlist-grid">
+      @for (item of items(); track item.id) {
+        @if (item.produto) {
+          <div class="wishlist-card" [routerLink]="['/produtos', item.produto.id]">
+            <div class="wishlist-card-image">
+              <img [src]="getImagemUrl(item)" [alt]="item.produto.nome" />
+              <button class="btn-remove-fav" (click)="removerItem(item.produto.id, $event)" title="Remover dos favoritos">
+                <mat-icon>favorite</mat-icon>
+              </button>
+            </div>
+            <div class="wishlist-card-content">
+              <span class="brand-badge">{{ item.produto.marca?.nome || 'Marca Genérica' }}</span>
+              <h4 class="product-title">{{ item.produto.nome }}</h4>
+              <p class="product-price">{{ item.produto.preco | currency:'BRL' }}</p>
+            </div>
+            <div class="wishlist-card-actions">
+              <button mat-flat-button class="btn-comprar" (click)="adicionarAoCarrinho(item, $event)">
+                <mat-icon>shopping_cart</mat-icon> Comprar
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

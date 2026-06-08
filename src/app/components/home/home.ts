@@ -7,14 +7,17 @@ import { CarrinhoService } from '../../services/carrinho.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { Header } from '../layout/header/header';
+import { Footer } from '../layout/footer/footer';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule, Header, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class Home implements OnInit {
   readonly produtos = signal<any[]>([]);
   readonly errorMessage = signal('');

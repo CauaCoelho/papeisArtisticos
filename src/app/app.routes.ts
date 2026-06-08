@@ -11,6 +11,9 @@ import { TemplateAdm } from './components/layout/template-adm/template-adm';
 import { Carrinho } from './components/carrinho/carrinho';
 import { Home } from './components/home/home';
 import { ProdutoDetail } from './components/produto-detail/produto-detail';
+import { PerfilComponent } from './components/perfil/perfil';
+import { AuthCallback } from './components/auth-callback/auth-callback';
+import { keycloakGuard } from './guards/keycloak.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,13 +35,12 @@ export const routes: Routes = [
     resolve: { bloco: blocoResolver },
   },
   { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
-  { path: 'login', component: NavigatorLogin, title: 'Login' },
   { path: 'home', component: Home, title: 'Tela inicial' },
-  { path: 'produtos/:id', component: ProdutoDetail, title: 'Detalhes do Produto' },
+  { path: 'perfil', component: PerfilComponent, title: 'Meu Perfil', canActivate: [keycloakGuard] },
+  { path: 'auth/callback', component: AuthCallback, title: 'Autenticando...' },
   {
     path: 'produtos/:id',
     component: ProdutoDetail,
     runGuardsAndResolvers: 'always'
   }
-]
-  ;
+];

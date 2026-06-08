@@ -1,0 +1,62 @@
+<app-header></app-header>
+
+<div class="page-wrapper">
+  <div class="perfil-container">
+    
+    <!-- Perfil Header / User Details -->
+    <div class="perfil-header-card">
+      <div class="user-info-section">
+        <div class="avatar-circle">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="user-text">
+          <h2>{{ keycloak.nomeUsuario() || 'Usuário' }}</h2>
+          <p>{{ keycloak.email() || 'E-mail não informado' }}</p>
+        </div>
+      </div>
+      <button mat-stroked-button class="btn-logout" (click)="logout()">
+        <mat-icon>logout</mat-icon> Sair da Conta
+      </button>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="tabs-card">
+      <mat-tab-group dynamicHeight animationDuration="300ms">
+        
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">favorite</mat-icon>
+            Lista de Desejos
+          </ng-template>
+          <div class="tab-content-wrapper">
+            <app-wishlist></app-wishlist>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">shopping_bag</mat-icon>
+            Minhas Compras
+          </ng-template>
+          <div class="tab-content-wrapper">
+            <app-compras></app-compras>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">home_pin</mat-icon>
+            Endereços
+          </ng-template>
+          <div class="tab-content-wrapper">
+            <app-enderecos></app-enderecos>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

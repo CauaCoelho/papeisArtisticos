@@ -1,0 +1,133 @@
+<div class="enderecos-container">
+  @if (!exibeForm()) {
+    <div class="header-acoes">
+      <h3 class="secao-titulo-principal">Meus Endereços</h3>
+      <button mat-flat-button class="btn-novo" (click)="abrirNovoForm()">
+        <mat-icon>add</mat-icon> Adicionar Endereço
+      </button>
+    </div>
+
+    @if (loading()) {
+      <div class="enderecos-loading">
+        <div class="spinner"></div>
+        <p>Carregando endereços...</p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="enderecos-error">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ errorMessage() }}</p>
+        <button mat-flat-button color="primary" (click)="carregarEnderecos()">Tentar Novamente</button>
+      </div>
+    } @else if (enderecos().length === 0) {
+      <div class="enderecos-empty">
+        <mat-icon>home_pin</mat-icon>
+        <h3>Nenhum endereço cadastrado</h3>
+        <p>Cadastre seus endereços de entrega para finalizar compras mais rápido!</p>
+      </div>
+    } @else {
+      <div class="enderecos-grid">
+        @for (end of enderecos(); track end.id) {
+          <div class="endereco-card">
+            <div class="card-detalhes">
+              <div class="icone-tipo">
+                <mat-icon>place</mat-icon>
+              </div>
+              <div class="info-texto">
+                <p class="rua-numero"><strong>{{ end.logradouro }}, {{ end.numero }}</strong></p>
+                @if (end.complemento) {
+                  <p class="complemento">{{ end.complemento }}</p>
+                }
+                <p class="bairro-cidade">{{ end.bairro }} - {{ end.cidade }}/{{ end.estado }}</p>
+                <p class="cep">CEP: {{ end.cep }}</p>
+              </div>
+            </div>
+            <div class="card-acoes">
+              <button mat-icon-button class="btn-editar" (click)="editarEndereco(end)" title="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-deletar" (click)="removerEndereco(end.id)" title="Excluir">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <div class="form-container">
+      <h3 class="form-titulo">{{ editandoId() !== null ? 'Editar Endereço' : 'Novo Endereço' }}</h3>
+      
+      <form [formGroup]="enderecoForm" (ngSubmit)="salvar()" class="endereco-form">
+        <div class="form-row double">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>CEP</mat-label>
+            <input matInput formControlName="cep" placeholder="00000-000" />
+            @if (enderecoForm.get('cep')?.touched && enderecoForm.get('cep')?.invalid) {
+              <mat-error>CEP inválido (Ex: 12345-678)</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Estado (UF)</mat-label>
+            <input matInput formControlName="estado" placeholder="SP" maxlength="2" />
+            @if (enderecoForm.get('estado')?.touched && enderecoForm.get('estado')?.invalid) {
+              <mat-error>Informe a UF (2 letras)</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field full-width">
+            <mat-label>Logradouro (Rua, Av, etc.)</mat-label>
+            <input matInput formControlName="logradouro" placeholder="Ex: Rua das Flores" />
+            @if (enderecoForm.get('logradouro')?.touched && enderecoForm.get('logradouro')?.invalid) {
+              <mat-error>Logradouro é obrigatório</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row double">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Número</mat-label>
+            <input matInput formControlName="numero" placeholder="123" />
+            @if (enderecoForm.get('numero')?.touched && enderecoForm.get('numero')?.invalid) {
+              <mat-error>Número é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Complemento (Opcional)</mat-label>
+            <input matInput formControlName="complemento" placeholder="Apto, Bloco..." />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row double">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="bairro" placeholder="Centro" />
+            @if (enderecoForm.get('bairro')?.touched && enderecoForm.get('bairro')?.invalid) {
+              <mat-error>Bairro é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="cidade" placeholder="Ex: São Paulo" />
+            @if (enderecoForm.get('cidade')?.touched && enderecoForm.get('cidade')?.invalid) {
+              <mat-error>Cidade é obrigatória</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-acoes-botoes">
+          <button type="button" mat-stroked-button class="btn-cancelar" (click)="cancelarForm()">
+            Cancelar
+          </button>
+          <button type="submit" mat-flat-button class="btn-salvar" [disabled]="enderecoForm.invalid">
+            Salvar Endereço
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

@@ -1,0 +1,79 @@
+<div class="compras-container">
+  @if (loading()) {
+    <div class="compras-loading">
+      <div class="spinner"></div>
+      <p>Carregando histórico de compras...</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div class="compras-error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage() }}</p>
+      <button mat-flat-button color="primary" (click)="carregarCompras()">Tentar Novamente</button>
+    </div>
+  } @else if (compras().length === 0) {
+    <div class="compras-empty">
+      <mat-icon>shopping_bag</mat-icon>
+      <h3>Nenhuma compra encontrada</h3>
+      <p>Você ainda não realizou compras na nossa loja.</p>
+    </div>
+  } @else {
+    <div class="compras-list">
+      <mat-accordion multi="true">
+        @for (compra of compras(); track compra.id) {
+          <mat-expansion-panel class="compra-panel">
+            <mat-expansion-panel-header class="compra-header">
+              <mat-panel-title class="compra-title-section">
+                <div class="compra-id">
+                  <strong>Pedido #{{ compra.id }}</strong>
+                  <span class="compra-data">{{ compra.dataCompra | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+              </mat-panel-title>
+              <mat-panel-description class="compra-desc-section">
+                <span class="compra-status" [ngClass]="getStatusClass(compra.status)">
+                  {{ compra.status || 'Processando' }}
+                </span>
+                <span class="compra-total">{{ compra.total | currency:'BRL' }}</span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="compra-detalhes">
+              <h5 class="secao-titulo">Itens do Pedido</h5>
+              <div class="itens-tabela">
+                <div class="tabela-header">
+                  <div class="col-produto">Produto</div>
+                  <div class="col-preco text-center">Preço</div>
+                  <div class="col-qtd text-center">Qtd.</div>
+                  <div class="col-subtotal text-right">Subtotal</div>
+                </div>
+                @for (item of compra.itens; track item.produtoId) {
+                  <div class="tabela-linha">
+                    <div class="col-produto">
+                      <strong>{{ item.nomeProduto || 'Produto' }}</strong>
+                    </div>
+                    <div class="col-preco text-center">{{ item.preco | currency:'BRL' }}</div>
+                    <div class="col-qtd text-center">{{ item.quantidade }}</div>
+                    <div class="col-subtotal text-right">
+                      {{ (item.subtotal ?? (item.preco * item.quantidade)) | currency:'BRL' }}
+                    </div>
+                  </div>
+                }
+              </div>
+
+              @if (compra.enderecoEntrega) {
+                <div class="entrega-info">
+                  <h5 class="secao-titulo"><mat-icon>local_shipping</mat-icon> Endereço de Entrega</h5>
+                  <p>
+                    {{ compra.enderecoEntrega.logradouro }}, {{ compra.enderecoEntrega.numero }}
+                    @if (compra.enderecoEntrega.complemento) { - {{ compra.enderecoEntrega.complemento }} }
+                  </p>
+                  <p>{{ compra.enderecoEntrega.bairro }} - {{ compra.enderecoEntrega.cidade }}/{{ compra.enderecoEntrega.estado }}</p>
+                  <p class="cep">CEP: {{ compra.enderecoEntrega.cep }}</p>
+                </div>
+              }
+            </div>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </div>
+  }
+</div>

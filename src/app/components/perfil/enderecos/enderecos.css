@@ -1,0 +1,233 @@
+.enderecos-container {
+  padding: 1rem 0;
+}
+
+.header-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.secao-titulo-principal {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.btn-novo {
+  background-color: #0f172a !important;
+  color: white !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.btn-novo:hover {
+  background-color: #38bdf8 !important;
+}
+
+.enderecos-loading, .enderecos-error, .enderecos-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+}
+
+.enderecos-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.enderecos-empty mat-icon, .enderecos-error mat-icon {
+  font-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.enderecos-empty h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.enderecos-empty p {
+  color: #64748b;
+}
+
+.enderecos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.endereco-card {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.endereco-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.card-detalhes {
+  display: flex;
+  gap: 12px;
+}
+
+.icone-tipo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #166534;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icone-tipo mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.info-texto p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.info-texto .rua-numero {
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.info-texto .cep {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+
+.card-acoes {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-editar {
+  color: #64748b !important;
+}
+
+.btn-editar:hover {
+  color: #38bdf8 !important;
+  background-color: rgba(56, 189, 248, 0.08) !important;
+}
+
+.btn-deletar {
+  color: #64748b !important;
+}
+
+.btn-deletar:hover {
+  color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.08) !important;
+}
+
+.form-container {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.form-titulo {
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+}
+
+.endereco-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  width: 100%;
+}
+
+.form-row.double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-acoes-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.btn-cancelar {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.btn-salvar {
+  background-color: #0f172a !important;
+  color: white !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.btn-salvar:hover:not([disabled]) {
+  background-color: #38bdf8 !important;
+}
+
+@media (max-width: 600px) {
+  .form-row.double {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .header-acoes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
