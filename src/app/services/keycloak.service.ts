@@ -52,7 +52,7 @@ export class KeycloakService {
       return;
     }
     try {
-      const response = await fetch('/auth/me', {
+      const response = await fetch('api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

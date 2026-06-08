@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, effect } from '@angular/core';
+import { Component, OnInit, inject, signal, effect, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EnderecoService } from '../../../services/endereco.service';
@@ -20,6 +20,7 @@ export class EnderecosComponent implements OnInit {
   private readonly enderecoService = inject(EnderecoService);
   private readonly keycloakService = inject(KeycloakService);
   private readonly fb = inject(FormBuilder);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly enderecos = signal<EnderecoModel[]>([]);
   readonly loading = signal(true);
@@ -30,17 +31,33 @@ export class EnderecosComponent implements OnInit {
   readonly editandoId = signal<number | null>(null);
   enderecoForm!: FormGroup;
 
-  ngOnInit(): void {
-    this.inicializarForm();
+  private carregouEnderecos = false;
 
-    // Usa effect() para reagir de forma reativa quando o userId resolver
-    // (o userId é carregado via chamada assíncrona a /auth/me no KeycloakService)
+  constructor() {
+    // effect() precisa estar no contexto de injeção (construtor ou campo de classe)
     effect(() => {
       const userId = this.keycloakService.userId();
-      if (userId !== null) {
+      if (userId !== null && !this.carregouEnderecos) {
+        this.carregouEnderecos = true;
         this.carregarEnderecos();
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.inicializarForm();
+
+    // Fallback: se após 5s o userId ainda não resolveu, encerra o spinner
+    const timeout = setTimeout(() => {
+      if (this.loading()) {
+        this.loading.set(false);
+        if (!this.carregouEnderecos) {
+          this.errorMessage.set('Não foi possível verificar autenticação. Faça login novamente.');
+        }
+      }
+    }, 5000);
+
+    this.destroyRef.onDestroy(() => clearTimeout(timeout));
   }
 
   inicializarForm(): void {

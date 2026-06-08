@@ -1,4 +1,12 @@
-<app-header></app-header>
+<app-header (toggleSidebar)="sidebarAberto.set(!sidebarAberto())"></app-header>
+
+<!-- Sidebar Overlay -->
+@if (sidebarAberto()) {
+  <div class="sidebar-overlay" (click)="sidebarAberto.set(false)"></div>
+  <div class="sidebar-drawer">
+    <app-sidebar></app-sidebar>
+  </div>
+}
 
 <div class="page-wrapper">
   <div class="home-container">

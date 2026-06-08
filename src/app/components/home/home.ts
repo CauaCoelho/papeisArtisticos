@@ -9,11 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Header } from '../layout/header/header';
 import { Footer } from '../layout/footer/footer';
+import { Sidebar } from '../layout/sidebar/sidebar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule, Header, Footer],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule, Header, Footer, Sidebar],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -22,6 +23,7 @@ export class Home implements OnInit {
   readonly produtos = signal<any[]>([]);
   readonly errorMessage = signal('');
   readonly searchTermSignal = signal('');
+  readonly sidebarAberto = signal(false);
 
   get searchTerm(): string {
     return this.searchTermSignal();
