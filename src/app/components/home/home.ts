@@ -7,18 +7,23 @@ import { CarrinhoService } from '../../services/carrinho.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { Header } from '../layout/header/header';
+import { Footer } from '../layout/footer/footer';
+import { Sidebar } from '../layout/sidebar/sidebar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, MatButtonModule, MatCardModule, Header, Footer, Sidebar],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class Home implements OnInit {
   readonly produtos = signal<any[]>([]);
   readonly errorMessage = signal('');
   readonly searchTermSignal = signal('');
+  readonly sidebarAberto = signal(false);
 
   get searchTerm(): string {
     return this.searchTermSignal();
@@ -68,7 +73,7 @@ export class Home implements OnInit {
               nome: p.nome || `${p.marca?.nome || 'Marca Desconhecida'} - ${(p.textura as any)?.nome || p.textura || 'Produto Exclusivo'}`,
               preco: p.preco || 99.90,
               imagemUrl: temImagem
-                ? `http://localhost:8080/papeis/image/download/${arquivos[0].nomeImagem}`
+                ? `/papeis/image/download/${arquivos[0].fid}`
                 : 'https://via.placeholder.com/300x200?text=Arte+e+Cor'
             };
           });

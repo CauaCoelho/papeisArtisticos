@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ProdutoService {
 
-  private readonly apiUrl = 'http://localhost:8080/papeis';
-  constructor(private http: HttpClient) {}
-  
+  private readonly apiUrl = '/papeis';
+  constructor(private http: HttpClient) { }
+
   findAllProdutos(): Observable<Produto[]> {
     return this.http.get<Produto[]>(`${this.apiUrl}?_t=${new Date().getTime()}`);
   }
@@ -29,5 +29,12 @@ export class ProdutoService {
 
   deleteProduto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  uploadImagem(idProduto: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('idProduto', String(idProduto));
+    formData.append('file', file);
+
+    return this.http.patch<void>(`${this.apiUrl}/image/upload`, formData);
   }
 }

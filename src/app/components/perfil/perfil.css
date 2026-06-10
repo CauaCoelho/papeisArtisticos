@@ -1,0 +1,164 @@
+.page-wrapper {
+  padding-top: 100px;
+  background: #f8fafc;
+  min-height: calc(100vh - 80px);
+}
+
+.perfil-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+.perfil-header-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 24px;
+  padding: 2.5rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
+  margin-bottom: 2rem;
+}
+
+.user-info-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-circle mat-icon {
+  font-size: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #38bdf8;
+}
+
+.user-text h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+}
+
+.user-text p {
+  font-size: 1rem;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.btn-logout {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: white !important;
+}
+
+.tabs-card {
+  background: white;
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+  border: 1px solid #f1f5f9;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.tab-content-wrapper {
+  padding: 1.5rem 0.5rem 0.5rem;
+}
+
+/* Customizing Angular Material Tabs to look extremely premium */
+::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #38bdf8;
+  --mat-tab-header-active-label-text-color: #0f172a;
+  --mat-tab-header-inactive-label-text-color: #64748b;
+  --mat-tab-header-active-ripple-color: rgba(56, 189, 248, 0.1);
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab-indicator__content--activated {
+  border-color: #38bdf8 !important;
+  border-width: 3px !important;
+}
+
+::ng-deep .mat-mdc-tab-labels {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+::ng-deep .mdc-tab {
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  height: 54px !important;
+  letter-spacing: 0.25px !important;
+}
+
+@media (max-width: 768px) {
+  .perfil-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+  .btn-logout {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Sidebar Drawer & Overlay ─────────────────────────────────── */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+  animation: fadeIn 0.2s ease;
+}
+
+.sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background: white;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.12);
+  z-index: 201;
+  overflow-y: auto;
+  animation: slideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 80px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}

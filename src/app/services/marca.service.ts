@@ -5,7 +5,7 @@ import { Marca } from '../models/marca.model';
 
 @Injectable({ providedIn: 'root' })
 export class MarcaService {
-    private readonly api = 'http://localhost:8080/marcas';
+    private readonly api = '/marcas';
     constructor(private http: HttpClient) { }
 
     findAll(): Observable<Marca[]> {

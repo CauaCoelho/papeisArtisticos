@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { catchError, finalize, Observable, of, shareReplay, switchMap, tap, throwError } from 'rxjs';
-import type { LoginPayload, LoginResponse, Usuario } from '../models';
+import { LoginPayload, LoginResponse, Usuario } from '../models/auth.models';
 
 interface AuthState {
     token: string | null;
@@ -14,8 +14,8 @@ interface AuthState {
 })
 export class EcommerceAuthService {
     private readonly httpClient = inject(HttpClient);
-    private readonly loginUrl = 'http://localhost:8080/auth/login';
-    private readonly meUrl = 'http://localhost:8080/auth/me';
+    private readonly loginUrl = '/auth/login';
+    private readonly meUrl = '/auth/me';
     private readonly storageKey = 'sga-ecommerce-auth';
     // Mantem o estado de autenticacao de forma reativa para os componentes que consomem o servico.
     private readonly stateSignal = signal<AuthState>(this.loadInitialState());
