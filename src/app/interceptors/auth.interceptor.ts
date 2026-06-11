@@ -20,6 +20,7 @@ const PUBLIC_ENDPOINTS = [
     '/sketchbooks',
     '/blocos',
     '/marcas',
+    '/perfil',
 ];
 
 // ✅ Endpoints de auth — nunca recebem token de usuário

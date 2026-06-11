@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Bloco } from '../../models/bloco.model';
-import { BlocoService } from '../../services/bloco.service';
+import { PapelAvulso } from '../../models/papel-avulso.model';
+import { PapelAvulsoService } from '../../services/papel-avulso.service';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -36,7 +36,7 @@ export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
 }
 
 @Component({
-  selector: 'app-bloco-list',
+  selector: 'app-papel-avulso-list',
   standalone: true,
   providers: [{ provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }],
   imports: [
@@ -55,50 +55,49 @@ export class PtBrMatPaginatorIntl extends MatPaginatorIntl {
     Sidebar,
     Footer
   ],
-  templateUrl: './bloco-list.html',
-  styleUrl: './bloco-list.css',
+  templateUrl: './papel-avulso-list.html',
+  styleUrl: './papel-avulso-list.css',
 })
-export class BlocoListComponent implements OnInit {
+export class PapelAvulsoListComponent implements OnInit {
 
   totalRecords: number = 0;
   page = 0;
   pageSize = 4;
   isSidebarOpen = signal(true);
 
-  listaOriginal: Bloco[] = [];
-  listaFiltrada: Bloco[] = [];
-  blocos = signal<Bloco[]>([]);
-  displayedItems = signal<Bloco[]>([]);
+  listaOriginal: PapelAvulso[] = [];
+  listaFiltrada: PapelAvulso[] = [];
+  papeis = signal<PapelAvulso[]>([]);
+  displayedItems = signal<PapelAvulso[]>([]);
 
   readonly dialog = inject(MatDialog);
   readonly fb = inject(FormBuilder);
 
-  displayedColumns: string[] = ['id', 'nome', 'numeroFolhas', 'acao'];
-  dataSource = new MatTableDataSource<Bloco>([]);
+  displayedColumns: string[] = ['id', 'nome', 'tipoPapel', 'tamanho', 'acao'];
+  dataSource = new MatTableDataSource<PapelAvulso>([]);
   termoBusca: string = '';
 
-  constructor(private blocoService: BlocoService) {}
+  constructor(private papelService: PapelAvulsoService) {}
 
   ngOnInit(): void {
     this.carregarDados();
   }
 
   carregarDados(): void {
-    this.blocoService.findAll(this.page, this.pageSize).subscribe({
+    this.papelService.findAll(this.page, this.pageSize).subscribe({
       next: response => {
-        // Handle response either as Bloco[] directly or as a paginated PageResponse
         const data = Array.isArray(response) ? response : (response as any).data || [];
         const total = Array.isArray(response) ? data.length : (response as any).total || data.length;
 
         this.listaOriginal = data;
         this.listaFiltrada = data;
         this.dataSource.data = data;
-        this.blocos.set(data);
+        this.papeis.set(data);
         this.displayedItems.set(data);
         this.totalRecords = total;
       },
       error: err => {
-        console.error('Erro ao carregar blocos:', err);
+        console.error('Erro ao carregar papéis avulsos:', err);
       }
     });
   }
@@ -129,7 +128,7 @@ export class BlocoListComponent implements OnInit {
   }
 
   buscar() {
-    this.blocoService.findByNome(this.termoBusca).subscribe(data => {
+    this.papelService.findByNome(this.termoBusca).subscribe(data => {
       this.listaFiltrada = data;
       this.dataSource.data = data;
       this.displayedItems.set(data);

@@ -1,0 +1,79 @@
+<app-header (toggleSidebar)="sidebarAberto.set(!sidebarAberto())"></app-header>
+
+@if (sidebarAberto()) {
+  <div class="sidebar-overlay" (click)="sidebarAberto.set(false)"></div>
+  <div class="sidebar-drawer">
+    <app-sidebar></app-sidebar>
+  </div>
+}
+
+<div class="page-wrapper">
+  <div class="catalog-container">
+    <!-- Hero -->
+    <div class="hero-section" style="background: linear-gradient(135deg, #1a3c1f 0%, #0d1f12 100%);">
+      <mat-icon class="hero-icon">description</mat-icon>
+      <h1>Blocos de Papel</h1>
+      <p>Blocos profissionais para aquarela, acrílico e outras técnicas. Folhas de alta gramatura que garantem a melhor performance para suas criações.</p>
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" [(ngModel)]="searchTerm" (input)="filtrarProdutos()"
+          placeholder="Busque por textura, gramatura..." />
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="produtos-grid">
+      @if (errorMessage()) {
+        <div style="grid-column: 1 / -1; color: #ba1a1a; padding: 20px; background: #ffdad6; border-radius: 8px; font-weight: 500; text-align: center;">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      @if (loading()) {
+        @for (_ of [1,2,3,4,5,6]; track _) {
+          <div class="skeleton-card">
+            <div class="skeleton-img"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line short"></div>
+              <div class="skeleton-line medium"></div>
+              <div class="skeleton-line full"></div>
+            </div>
+          </div>
+        }
+      } @else if (produtosFiltrados().length > 0) {
+        @for (produto of produtosFiltrados(); track produto.id) {
+          <div class="produto-card" [routerLink]="['/produtos', produto.id]">
+            <div class="card-image">
+              <img [src]="produto.imagemUrl" [alt]="produto.nome" />
+              <div class="card-overlay">
+                <mat-icon>visibility</mat-icon>
+                <span>Ver Detalhes</span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="category-badge" style="background:#dcfce7; color:#15803d;">Bloco</div>
+              <h3 class="produto-nome">{{ produto.nome }}</h3>
+              <p class="produto-detalhe">{{ produto.detalhe }}</p>
+              <p class="produto-preco">{{ produto.preco | currency:'BRL' }}</p>
+            </div>
+            <div class="card-actions">
+              <button mat-flat-button class="add-to-cart-btn"
+                style="background:#1a3c1f !important; color:white !important;"
+                (click)="adicionarAoCarrinho(produto, $event)">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Comprar
+              </button>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="no-results">
+          <mat-icon>sentiment_dissatisfied</mat-icon>
+          <p>Nenhum bloco encontrado.</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

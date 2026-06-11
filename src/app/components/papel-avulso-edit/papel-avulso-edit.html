@@ -1,22 +1,32 @@
 <mat-toolbar class="toolbar-title" color="primary">
-  Adicionar/Editar Bloco
+  Editar Papel Avulso
 </mat-toolbar>
 
 <mat-card class="card">
   <mat-card-content>
     <form class="form" [formGroup]="form">
       <div class="grid">
-        <!-- quantidadeFolhas -->
+        <!-- tipoPapel -->
         <mat-form-field appearance="outline">
-          <mat-label>Quantidade de Folhas</mat-label>
-          <input matInput type="number" formControlName="quantidadeFolhas" placeholder="Ex.: 50" />
+          <mat-label>Tipo de Papel</mat-label>
+          <input matInput formControlName="tipoPapel" placeholder="Ex.: Couchê, Offset" />
           <mat-error
-            [hidden]="!(form.get('quantidadeFolhas')?.hasError('required') && form.get('quantidadeFolhas')?.touched)">
-            A quantidade de folhas é obrigatória.
+            [hidden]="!(form.get('tipoPapel')?.hasError('required') && form.get('tipoPapel')?.touched)">
+            O tipo de papel é obrigatório.
           </mat-error>
           <mat-error
-            [hidden]="!(form.get('quantidadeFolhas')?.hasError('min') && form.get('quantidadeFolhas')?.touched)">
-            A quantidade de folhas deve ser pelo menos 1.
+            [hidden]="!(form.get('tipoPapel')?.hasError('minlength') && form.get('tipoPapel')?.touched)">
+            O tipo de papel deve ter pelo menos 2 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- tamanho -->
+        <mat-form-field appearance="outline">
+          <mat-label>Tamanho</mat-label>
+          <input matInput formControlName="tamanho" placeholder="Ex.: A4, A3, 30x30cm" />
+          <mat-error
+            [hidden]="!(form.get('tamanho')?.hasError('required') && form.get('tamanho')?.touched)">
+            O tamanho é obrigatório.
           </mat-error>
         </mat-form-field>
 
@@ -36,7 +46,7 @@
       </div>
 
       <div class="actions">
-        <button mat-raised-button routerLink="/admin/blocos">
+        <button mat-raised-button routerLink="/admin/papelavulsos">
           Cancelar
         </button>
         <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">

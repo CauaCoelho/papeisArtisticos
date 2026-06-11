@@ -1,43 +1,48 @@
-<form [formGroup]="form" class="form-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Nome do Bloco</mat-label>
-    <input matInput formControlName="nome" />
-    <mat-error [hidden]="form.get('nome')?.hasError('required') && form.get('nome')?.touched">
-      O nome do bloco é obrigatório.
-    </mat-error>
-    <mat-error [hidden]="form.get('nome')?.hasError('minlength') && form.get('nome')?.touched">
-      O nome deve ter pelo menos 3 caracteres.
-    </mat-error>
-  </mat-form-field>
+<mat-toolbar class="toolbar-title" color="primary">
+  Editar Bloco
+</mat-toolbar>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Número de Folhas</mat-label>
-    <input matInput type="number" formControlName="numeroFolhas" />
-    <mat-error [hidden]="form.get('numeroFolhas')?.hasError('required') && form.get('numeroFolhas')?.touched">
-      O número de folhas é obrigatório.
-    </mat-error>
-    <mat-error [hidden]="form.get('numeroFolhas')?.hasError('min') && form.get('numeroFolhas')?.touched">
-      O número de folhas deve ser pelo menos 20.
-    </mat-error>
-  </mat-form-field>
+<mat-card class="card">
+  <mat-card-content>
+    <form class="form" [formGroup]="form">
+      <div class="grid">
+        <!-- quantidadeFolhas -->
+        <mat-form-field appearance="outline">
+          <mat-label>Quantidade de Folhas</mat-label>
+          <input matInput type="number" formControlName="quantidadeFolhas" placeholder="Ex.: 50" />
+          <mat-error
+            [hidden]="!(form.get('quantidadeFolhas')?.hasError('required') && form.get('quantidadeFolhas')?.touched)">
+            A quantidade de folhas é obrigatória.
+          </mat-error>
+          <mat-error
+            [hidden]="!(form.get('quantidadeFolhas')?.hasError('min') && form.get('quantidadeFolhas')?.touched)">
+            A quantidade de folhas deve ser pelo menos 1.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Textura</mat-label>
-    <input matInput formControlName="textura" />
-    <mat-error [hidden]="form.get('textura')?.hasError('required') && form.get('textura')?.touched">
-      A textura é obrigatória.
-    </mat-error>
-  </mat-form-field>
+        <!-- Textura -->
+        <mat-form-field appearance="outline">
+          <mat-label>Textura</mat-label>
+          <mat-select formControlName="idTextura" placeholder="Selecione uma textura">
+            <mat-option [value]="null" disabled="false"> Nenhuma </mat-option>
+            @for (t of texturas; track t.id) {
+            <mat-option [value]="t.id">{{t.nome}} </mat-option>
+            }
+          </mat-select>
+          <mat-error [hidden]="!(form.get('idTextura')?.hasError('required') && form.get('idTextura')?.touched)">
+            A textura é obrigatória.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Formato</mat-label>
-    <input matInput formControlName="formato" />
-    <mat-error [hidden]="form.get('formato')?.hasError('required') && form.get('formato')?.touched">
-      O formato é obrigatório.
-    </mat-error>
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
-    Salvar
-  </button>
-</form>
+      <div class="actions">
+        <button mat-raised-button routerLink="/admin/blocos">
+          Cancelar
+        </button>
+        <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

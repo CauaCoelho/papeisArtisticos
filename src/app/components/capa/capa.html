@@ -1,1 +1,34 @@
-<p>capa works!</p>
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<div class="content">
+  @if (isSidebarOpen()) {
+  <app-sidebar></app-sidebar>
+  }
+  <main>
+    <section class="p-gutter max-w-container-max mx-auto space-y-stack-md">
+      <!-- Page Header -->
+      <div class="flex items-end justify-between mb-stack-lg">
+        <div>
+          <h2 class="font-h1 text-h1 text-on-background">Tipos de Capa</h2>
+          <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Catálogo premium de tipos de capa disponíveis para a customização e produção dos sketchbooks.</p>
+        </div>
+      </div>
+
+      <!-- Main Grid Container -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        @for (capa of capas(); track capa.id) {
+        <div class="paper-grain bg-white rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.15)] overflow-hidden border border-zinc-100 flex flex-col p-6 hover:shadow-lg transition-all group">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+            <span class="material-symbols-outlined text-3xl">style</span>
+          </div>
+          <h3 class="font-epilogue font-bold text-lg text-zinc-900 mb-1">{{ capa.nome }}</h3>
+          <p class="text-xs text-zinc-400 mb-3">ID: {{ capa.id }}</p>
+          <div class="mt-auto">
+            <span class="px-3 py-1 bg-zinc-100 text-zinc-600 text-xs font-semibold rounded-full uppercase tracking-wider">{{ capa.material || 'Material Premium' }}</span>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+  </main>
+</div>
+<app-footer></app-footer>

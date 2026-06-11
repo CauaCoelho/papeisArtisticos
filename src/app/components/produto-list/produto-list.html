@@ -1,1 +1,104 @@
-<p>produto-list works!</p>
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<div class="content">
+  @if (isSidebarOpen()) {
+  <app-sidebar></app-sidebar>
+  }
+  <main>
+    <section class="p-gutter max-w-container-max mx-auto space-y-stack-md">
+      <!-- Page Header -->
+      <div class="flex items-end justify-between mb-stack-lg">
+        <div>
+          <h2 class="font-h1 text-h1 text-on-background">Produtos</h2>
+          <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Gerencie o catálogo geral de produtos. Visualize todos os sketchbooks, blocos, rolos e papéis avulsos em um só lugar.</p>
+        </div>
+      </div>
+
+      <!-- Dashboard Stats Bento (Small) -->
+      <div class="grid grid-cols-4 gap-6 mb-stack-lg">
+        <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
+          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Total de Produtos</p>
+          <h3 class="font-h2 text-h2 text-primary">{{ produtos().length }}</h3>
+        </div>
+        <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
+          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Estoque Baixo</p>
+          <h3 class="font-h2 text-h2 text-secondary">--</h3>
+        </div>
+        <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
+          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Marcas Ativas</p>
+          <h3 class="font-h2 text-h2 text-on-primary-container">--</h3>
+        </div>
+        <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
+          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Preço Médio</p>
+          <h3 class="font-h2 text-h2 text-primary">--</h3>
+        </div>
+      </div>
+
+      <!-- Main Data Table Container -->
+      <div
+        class="paper-grain bg-white rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.15)] overflow-hidden border border-zinc-50">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-zinc-50/50 border-b border-zinc-100">
+            <tr>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Nome do Produto</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Marca</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Textura</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Preço</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-100">
+            @for (produto of displayedItems(); track produto.id) {
+            <tr class="hover:bg-sky-50/30 transition-colors group">
+              <td class="px-6 py-5">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded bg-zinc-100 overflow-hidden border border-zinc-200/50 flex-shrink-0">
+                    <span class="material-symbols-outlined text-zinc-400">inventory</span>
+                  </div>
+                  <div>
+                    <p class="font-epilogue font-bold text-zinc-900">{{ produto.nome || 'Produto Premium' }}</p>
+                    <p class="text-xs text-zinc-400">SKU: PROD-{{ produto.id }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-5 text-zinc-600 font-medium">{{ produto.marca?.nome || 'N/A' }}</td>
+              <td class="px-6 py-5">
+                <span
+                  class="px-3 py-1 bg-primary-container/20 text-on-primary-container text-xs font-semibold rounded-full">{{ $any(produto.textura)?.nome || produto.textura || 'Sem textura' }}</span>
+              </td>
+              <td class="px-6 py-5 text-zinc-600 font-medium">{{ (produto.preco | currency:'BRL') || '--' }}</td>
+              <td class="px-6 py-5 text-right">
+                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button [routerLink]="['/produtos', produto.id]"
+                    class="p-2 text-zinc-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-xl">visibility</span>
+                  </button>
+                  <button (click)="openDialog('4000ms', '2500ms')"
+                    class="p-2 text-zinc-400 hover:text-error transition-colors">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="px-6 py-4 bg-zinc-50/50 border-t border-zinc-100 flex items-center justify-between">
+          <p class="text-label-sm text-zinc-500 font-medium">Mostrando 1 a {{ displayedItems().length }} de {{
+            produtos().length }} Produtos</p>
+          <div class="flex items-center gap-1">
+            <button (click)="previousPage()" class="p-1 rounded hover:bg-zinc-200 transition-colors text-zinc-400">
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button class="px-3 py-1 text-sm font-semibold rounded bg-primary text-on-primary">1</button>
+            <button (click)="nextPage()" class="p-1 rounded hover:bg-zinc-200 transition-colors text-zinc-400">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<app-footer></app-footer>

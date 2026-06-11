@@ -1,32 +1,57 @@
 <mat-nav-list>
-  <!-- Itens exclusivos do ADMIN -->
+  <!-- Catálogo de Produtos para todos os usuários -->
+  <div class="nav-section-title" style="padding: 8px 16px; font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 600; letter-spacing: 0.05em;">Catálogo</div>
+  
+  <a mat-list-item routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon matListItemIcon>home</mat-icon>
+    <span matListItemTitle>Início</span>
+  </a>
+  <a mat-list-item routerLink="/catalogo/sketchbooks" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>book</mat-icon>
+    <span matListItemTitle>Sketchbooks</span>
+  </a>
+  <a mat-list-item routerLink="/catalogo/blocos" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>description</mat-icon>
+    <span matListItemTitle>Blocos</span>
+  </a>
+  <a mat-list-item routerLink="/catalogo/papelavulsos" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>note</mat-icon>
+    <span matListItemTitle>Papéis Avulsos</span>
+  </a>
+  <a mat-list-item routerLink="/catalogo/rolos" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>layers</mat-icon>
+    <span matListItemTitle>Rolos</span>
+  </a>
+
+  <!-- Menu exclusivo do ADMIN -->
   @if (isAdmin()) {
+    <mat-divider style="margin: 8px 0;"></mat-divider>
+    <div class="nav-section-title" style="padding: 8px 16px; font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 600; letter-spacing: 0.05em;">Administração</div>
+    
     <a mat-list-item routerLink="/admin/dashboard" routerLinkActive="active-link">
       <mat-icon matListItemIcon>dashboard</mat-icon>
       <span matListItemTitle>Dashboard</span>
     </a>
-  }
-
-  <!-- Itens de catálogo — visíveis para ADMIN e USER -->
-  <a mat-list-item routerLink="/admin/produtos" routerLinkActive="active-link">
-    <mat-icon matListItemIcon>inventory</mat-icon>
-    <span matListItemTitle>Produtos</span>
-  </a>
-  <a mat-list-item routerLink="/admin/sketchbooks" routerLinkActive="active-link">
-    <mat-icon matListItemIcon>book</mat-icon>
-    <span matListItemTitle>Sketchbooks</span>
-  </a>
-  <a mat-list-item routerLink="/admin/blocos" routerLinkActive="active-link">
-    <mat-icon matListItemIcon>description</mat-icon>
-    <span matListItemTitle>Blocos</span>
-  </a>
-  <a mat-list-item routerLink="/admin/capas" routerLinkActive="active-link">
-    <mat-icon matListItemIcon>style</mat-icon>
-    <span matListItemTitle>Capas</span>
-  </a>
-
-  <!-- Exclusivo do ADMIN -->
-  @if (isAdmin()) {
+    <a mat-list-item routerLink="/admin/produtos" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>inventory</mat-icon>
+      <span matListItemTitle>Produtos</span>
+    </a>
+    <a mat-list-item routerLink="/admin/sketchbooks" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>book</mat-icon>
+      <span matListItemTitle>Sketchbooks (Gerenciar)</span>
+    </a>
+    <a mat-list-item routerLink="/admin/blocos" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>description</mat-icon>
+      <span matListItemTitle>Blocos (Gerenciar)</span>
+    </a>
+    <a mat-list-item routerLink="/admin/capas" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>style</mat-icon>
+      <span matListItemTitle>Capas (Gerenciar)</span>
+    </a>
+    <a mat-list-item routerLink="/admin/papelavulsos" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>note</mat-icon>
+      <span matListItemTitle>Papéis Avulsos (Gerenciar)</span>
+    </a>
     <a mat-list-item routerLink="/admin/usuarios" routerLinkActive="active-link">
       <mat-icon matListItemIcon>people</mat-icon>
       <span matListItemTitle>Usuários</span>

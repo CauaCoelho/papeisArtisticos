@@ -14,10 +14,25 @@ import { ProdutoDetail } from './components/produto-detail/produto-detail';
 import { PerfilComponent } from './components/perfil/perfil';
 import { AuthCallback } from './components/auth-callback/auth-callback';
 import { keycloakGuard } from './guards/keycloak.guard';
+import { ProdutoListComponent } from './components/produto-list/produto-list';
+import { CapaComponent } from './components/capa/capa';
+import { PapelAvulsoListComponent } from './components/papel-avulso-list/papel-avulso-list';
+import { PapelAvulsoForm } from './components/papel-avulso-form/papel-avulso-form';
+import { PapelAvulsoEdit } from './components/papel-avulso-edit/papel-avulso-edit';
+import { papelAvulsoResolver } from './components/resolvers/papel-avulso-resolver';
+import { SketchbooksCatalog } from './components/catalog/sketchbooks-catalog';
+import { BlocosCatalog } from './components/catalog/blocos-catalog';
+import { PapeisAvulsosCatalog } from './components/catalog/papeis-avulsos-catalog';
+import { RolosCatalog } from './components/catalog/rolos-catalog';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'catalogo/sketchbooks', component: SketchbooksCatalog, title: 'Catálogo de Sketchbooks' },
+  { path: 'catalogo/blocos', component: BlocosCatalog, title: 'Catálogo de Blocos' },
+  { path: 'catalogo/papelavulsos', component: PapeisAvulsosCatalog, title: 'Catálogo de Papéis Avulsos' },
+  { path: 'catalogo/rolos', component: RolosCatalog, title: 'Catálogo de Rolos' },
   { path: 'admin/dashboard', component: TemplateAdm, title: 'Dashboard' },
+  { path: 'admin/produtos', component: ProdutoListComponent, title: 'Produtos' },
   { path: 'admin/sketchbooks', component: SketchbookComponent, title: 'Sketchbooks' },
   { path: 'admin/sketchbooks/new', component: SketchbookForm, title: 'Adicionar Sketchbook' },
   {
@@ -33,6 +48,15 @@ export const routes: Routes = [
     component: BlocoEdit,
     title: 'Editar Bloco',
     resolve: { bloco: blocoResolver },
+  },
+  { path: 'admin/capas', component: CapaComponent, title: 'Capas' },
+  { path: 'admin/papelavulsos', component: PapelAvulsoListComponent, title: 'Papéis Avulsos' },
+  { path: 'admin/papelavulsos/new', component: PapelAvulsoForm, title: 'Adicionar Papel Avulso' },
+  {
+    path: 'admin/papelavulsos/:id',
+    component: PapelAvulsoEdit,
+    title: 'Editar Papel Avulso',
+    resolve: { papel: papelAvulsoResolver },
   },
   { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
   { path: 'home', component: Home, title: 'Tela inicial' },

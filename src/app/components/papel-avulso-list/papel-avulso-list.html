@@ -8,21 +8,21 @@
       <!-- Page Header -->
       <div class="flex items-end justify-between mb-stack-lg">
         <div>
-          <h2 class="font-h1 text-h1 text-on-background">Blocos</h2>
-          <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Gerencie seus blocos de papel artísticos. Edite detalhes, acompanhe os níveis de estoque e atualize as especificações do papel.</p>
+          <h2 class="font-h1 text-h1 text-on-background">Papéis Avulsos</h2>
+          <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Gerencie seus papéis avulsos. Edite detalhes, acompanhe os níveis de estoque e atualize as especificações do papel.</p>
         </div>
-        <button routerLink="/admin/blocos/new"
+        <button routerLink="/admin/papelavulsos/new"
           class="flex items-center gap-2 bg-primary text-on-primary font-epilogue font-semibold py-3 px-6 rounded-lg shadow-[0_4px_0_0_#294964] hover:translate-y-[1px] hover:shadow-[0_3px_0_0_#294964] active:translate-y-[4px] active:shadow-none transition-all">
           <span class="material-symbols-outlined">add_circle</span>
-          Adicionar novo bloco
+          Adicionar novo papel avulso
         </button>
       </div>
 
       <!-- Dashboard Stats Bento (Small) -->
       <div class="grid grid-cols-4 gap-6 mb-stack-lg">
         <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
-          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Total de Blocos</p>
-          <h3 class="font-h2 text-h2 text-primary">{{ blocos().length }}</h3>
+          <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Total de Papéis</p>
+          <h3 class="font-h2 text-h2 text-primary">{{ papeis().length }}</h3>
         </div>
         <div class="paper-grain bg-surface-container-low p-6 rounded-xl border border-zinc-100/50 shadow-sm">
           <p class="text-label-sm text-outline uppercase tracking-wider mb-2">Estoque Baixo</p>
@@ -44,32 +44,32 @@
         <table class="w-full text-left border-collapse">
           <thead class="bg-zinc-50/50 border-b border-zinc-100">
             <tr>
-              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Nome do Bloco</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Nome / Tipo</th>
+              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Tamanho</th>
               <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Textura</th>
-              <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Nº de Páginas</th>
               <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Status</th>
               <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm text-right">Ações</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-100">
-            @for (bloco of displayedItems(); track bloco.id) {
+            @for (papel of displayedItems(); track papel.id) {
             <tr class="hover:bg-sky-50/30 transition-colors group">
               <td class="px-6 py-5">
                 <div class="flex items-center gap-4">
                   <div class="w-12 h-12 rounded bg-zinc-100 overflow-hidden border border-zinc-200/50 flex-shrink-0">
-                    <span class="material-symbols-outlined text-zinc-400">description</span>
+                    <span class="material-symbols-outlined text-zinc-400">article</span>
                   </div>
                   <div>
-                    <p class="font-epilogue font-bold text-zinc-900">{{ bloco.nome || 'Bloco Artístico' }}</p>
-                    <p class="text-xs text-zinc-400">SKU: BL-{{ bloco.id }}</p>
+                    <p class="font-epilogue font-bold text-zinc-900">{{ papel.nome || papel.tipoPapel || 'Papel Avulso Premium' }}</p>
+                    <p class="text-xs text-zinc-400">SKU: PA-{{ papel.id }}</p>
                   </div>
                 </div>
               </td>
+              <td class="px-6 py-5 text-zinc-600 font-medium">{{ papel.tamanho || 'A4' }}</td>
               <td class="px-6 py-5">
                 <span
-                  class="px-3 py-1 bg-primary-container/20 text-on-primary-container text-xs font-semibold rounded-full">{{ $any(bloco.textura)?.nome || bloco.textura || 'Sem textura' }}</span>
+                  class="px-3 py-1 bg-primary-container/20 text-on-primary-container text-xs font-semibold rounded-full">{{ $any(papel.textura)?.nome || papel.textura || 'Sem textura' }}</span>
               </td>
-              <td class="px-6 py-5 text-zinc-600 font-medium">{{ bloco.numeroFolhas }} Páginas</td>
               <td class="px-6 py-5">
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
@@ -78,7 +78,7 @@
               </td>
               <td class="px-6 py-5 text-right">
                 <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button [routerLink]="['/admin/blocos', bloco.id]"
+                  <button [routerLink]="['/admin/papelavulsos', papel.id]"
                     class="p-2 text-zinc-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined text-xl">edit</span>
                   </button>
@@ -96,7 +96,7 @@
         <!-- Pagination -->
         <div class="px-6 py-4 bg-zinc-50/50 border-t border-zinc-100 flex items-center justify-between">
           <p class="text-label-sm text-zinc-500 font-medium">Mostrando 1 a {{ displayedItems().length }} de {{
-            blocos().length }} Blocos</p>
+            papeis().length }} Papéis</p>
           <div class="flex items-center gap-1">
             <button (click)="previousPage()" class="p-1 rounded hover:bg-zinc-200 transition-colors text-zinc-400">
               <span class="material-symbols-outlined">chevron_left</span>

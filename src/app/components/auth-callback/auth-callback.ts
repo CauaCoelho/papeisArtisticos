@@ -71,12 +71,15 @@ export class AuthCallback implements OnInit {
   constructor(
     private keycloak: KeycloakService,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
+    console.log('AuthCallback iniciado');
+
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const errorParam = params.get('error');
+    console.log('Code recebido:', code);
 
     if (errorParam) {
       this.erro = params.get('error_description') ?? 'Autenticação recusada pelo Keycloak.';

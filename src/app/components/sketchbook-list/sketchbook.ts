@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Capa } from '../capa/capa';
+import { Capa } from '../../models/capa.model';
 import { Sketchbook } from '../../models/sketchbook.model';
 import { SketchbookService } from '../../services/sketchbook.service';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';

@@ -46,19 +46,26 @@ export class KeycloakService {
   }
 
   async carregarUsuarioDb(): Promise<void> {
+    console.log('INICIO carregarUsuarioDb');
     const token = this._token();
     if (!token) {
       this._userId.set(null);
       return;
     }
     try {
-      const response = await fetch('api/auth/me', {
+      const response = await fetch('/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+
+      console.log('STATUS auth/me:', response.status);
+
+      const texto = await response.text();
+
+      console.log('RESPOSTA auth/me:', texto);
       if (response.ok) {
-        const user = await response.json();
+        const user = JSON.parse(texto);
         this._userId.set(user.id);
       } else {
         this._userId.set(null);
@@ -70,31 +77,31 @@ export class KeycloakService {
   }
 
   /** Redireciona para a tela de login do Keycloak */
-async login(): Promise<void> {
-  // ✅ Verifica se o Keycloak está acessível antes de redirecionar
-  try {
-    const probe = await fetch(
-      `${KEYCLOAK_SERVER}/realms/${REALM}/.well-known/openid-configuration`,
-      { method: 'HEAD', signal: AbortSignal.timeout(3000) }
-    );
-    if (!probe.ok) {
-      console.error('[KeycloakService] Realm não encontrado:', probe.status);
-      // Emita um signal de erro para o componente tratar
-      throw new Error(`Realm "${REALM}" não encontrado no Keycloak (${probe.status})`);
+  async login(): Promise<void> {
+    // ✅ Verifica se o Keycloak está acessível antes de redirecionar
+    try {
+      const probe = await fetch(
+        `${KEYCLOAK_SERVER}/realms/${REALM}/.well-known/openid-configuration`,
+        { method: 'HEAD', signal: AbortSignal.timeout(3000) }
+      );
+      if (!probe.ok) {
+        console.error('[KeycloakService] Realm não encontrado:', probe.status);
+        // Emita um signal de erro para o componente tratar
+        throw new Error(`Realm "${REALM}" não encontrado no Keycloak (${probe.status})`);
+      }
+    } catch (err) {
+      console.error('[KeycloakService] Keycloak inacessível:', err);
+      throw err; // Componente de login deve capturar e mostrar mensagem amigável
     }
-  } catch (err) {
-    console.error('[KeycloakService] Keycloak inacessível:', err);
-    throw err; // Componente de login deve capturar e mostrar mensagem amigável
-  }
 
-  const params = new URLSearchParams({
-    client_id: CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
-    response_type: 'code',
-    scope: 'openid profile email',
-  });
-  window.location.href = `${this.authUrl}?${params.toString()}`;
-}
+    const params = new URLSearchParams({
+      client_id: CLIENT_ID,
+      redirect_uri: REDIRECT_URI,
+      response_type: 'code',
+      scope: 'openid profile email',
+    });
+    window.location.href = `${this.authUrl}?${params.toString()}`;
+  }
   /** Encerra a sessão no Keycloak e limpa dados locais */
   logout(): void {
     const token = this._token();
@@ -110,13 +117,17 @@ async login(): Promise<void> {
 
   /** Troca o authorization code por um access token */
   async exchangeCodeForToken(code: string): Promise<void> {
+    console.log('INICIANDO TROCA');
+    console.log('REDIRECT_URI:', REDIRECT_URI);
+    console.log('CLIENT_ID:', CLIENT_ID);
+    console.log('CODE:', code);
     const body = new URLSearchParams({
       grant_type: 'authorization_code',
       client_id: CLIENT_ID,
       code,
       redirect_uri: REDIRECT_URI,
     });
-
+    console.log('BODY:', body.toString());
     const response = await fetch(this.tokenUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -126,13 +137,19 @@ async login(): Promise<void> {
     if (!response.ok) {
       throw new Error(`Falha ao trocar code por token: ${response.statusText}`);
     }
+    console.log('STATUS TOKEN:', response.status);
 
     const data: KeycloakTokenResponse = await response.json();
-    this.saveToken(data.access_token);
+    await this.saveToken(data.access_token);
+
+    console.log('TOKEN RECEBIDO');
   }
 
   /** Retorna o Bearer token para uso nos headers HTTP */
   getAuthorizationHeader(): string | null {
+    if (!this.isLoggedIn()) {
+      return null;
+    }
     const token = this._token();
     return token ? `Bearer ${token}` : null;
   }
@@ -149,12 +166,12 @@ async login(): Promise<void> {
 
   // ── Privados ─────────────────────────────────────────────────────────────
 
-  private saveToken(token: string): void {
+  private async saveToken(token: string): Promise<void> {
     localStorage.setItem(STORAGE_KEY, token);
     const payload = this.decodeJwt(token);
     this._token.set(token);
     this._payload.set(payload);
-    this.carregarUsuarioDb();
+    await this.carregarUsuarioDb();
   }
 
   private clearSession(): void {
