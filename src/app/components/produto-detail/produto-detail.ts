@@ -4,6 +4,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProdutoService } from '../../services/produto.service';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { KeycloakService } from '../../services/keycloak.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -24,12 +26,20 @@ export class ProdutoDetail implements OnInit {
   produtosSemelhantes: any[] = [];
   loading: boolean = true;
 
+  private wishlistIds = new Set<number>();
+
   constructor(
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
     private carrinhoService: CarrinhoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public keycloakService: KeycloakService,
+    private wishlistService: WishlistService
   ) { }
+
+  get isAdmin(): boolean {
+    return this.keycloakService.isLoggedIn() && this.keycloakService.isAdmin();
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -51,14 +61,17 @@ export class ProdutoDetail implements OnInit {
             nome: (data as any).nome || `${(data as any).marca?.nome || 'Marca Desconhecida'} - ${(data as any).textura?.nome || 'Produto Exclusivo'}`,
             preco: (data as any).preco || 99.90,
             textura: (data as any).textura?.nome || (data as any).textura, // normaliza para string
+            inWishlist: false,
           };
 
-          this.imagens = ((data as any).imagens?.length > 0)
-            ? (data as any).imagens.map((img: any) => `http://localhost:8080/papeis/image/download/${img.fid}`)
+          const arquivos = (data as any).imagens || (data as any).arquivos || [];
+          this.imagens = arquivos.length > 0
+            ? arquivos.map((img: any) => `/papeis/image/download/${img.fid}`)
             : ['https://via.placeholder.com/600x400?text=Sem+Imagem'];
 
           this.imagemPrincipal = this.imagens[0];
           this.carregarProdutosSemelhantes();
+          this.atualizarWishlistStatus();
         } catch (e) {
           console.error('Erro ao processar dados do produto', e);
         } finally {
@@ -91,16 +104,20 @@ export class ProdutoDetail implements OnInit {
       next: (data) => {
         const processed = data
           .filter(p => p.id !== this.produto.id)
-          .map(p => ({
-            ...p,
-            nome: p.nome || `${p.marca?.nome || 'Marca Genérica'} - ${p.textura || 'Papel'}`,
-            preco: (p as any).preco || 89.90,
-            imagemUrl: (p as any).imagens && (p as any).imagens.length > 0
-              ? `http://localhost:8080/papeis/image/download/${(p as any).imagens[0].fid}`
-              : 'https://via.placeholder.com/300x200?text=Produto+Semelhante'
-          }))
+          .map(p => {
+            const arquivos = (p as any).imagens || (p as any).arquivos || [];
+            return {
+              ...p,
+              nome: p.nome || `${p.marca?.nome || 'Marca Genérica'} - ${p.textura || 'Papel'}`,
+              preco: (p as any).preco || 89.90,
+              imagemUrl: arquivos.length > 0
+                ? `/papeis/image/download/${arquivos[0].fid}`
+                : 'https://via.placeholder.com/300x200?text=Produto+Semelhante'
+            };
+          })
           .slice(0, 4); // Take up to 4
         this.produtosSemelhantes = processed;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -132,5 +149,53 @@ export class ProdutoDetail implements OnInit {
       quantidade: this.quantidade
     });
     alert(`${this.quantidade}x ${this.produto.nome} adicionado ao carrinho!`);
+  }
+
+  private atualizarWishlistStatus(): void {
+    if (!this.produto || !this.keycloakService.isLoggedIn()) {
+      return;
+    }
+
+    this.wishlistService.listar().subscribe({
+      next: (items) => {
+        this.wishlistIds = new Set(items.map(item => item.produtoId));
+        this.produto.inWishlist = this.wishlistIds.has(this.produto.id);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar status da wishlist:', err);
+        this.produto.inWishlist = false;
+      }
+    });
+  }
+
+  toggleWishlist(): void {
+    if (!this.keycloakService.isLoggedIn()) {
+      this.keycloakService.login();
+      return;
+    }
+
+    const produtoId = this.produto.id ?? this.produto.produtoId;
+    if (!produtoId) {
+      console.error('Produto sem id para wishlist:', this.produto);
+      return;
+    }
+
+    if (this.produto.inWishlist) {
+      this.wishlistService.remover(produtoId).subscribe({
+        next: () => {
+          this.produto.inWishlist = false;
+          this.atualizarWishlistStatus();
+        },
+        error: (err) => console.error('Erro ao remover da wishlist', err)
+      });
+    } else {
+      this.wishlistService.adicionar(produtoId).subscribe({
+        next: () => {
+          this.produto.inWishlist = true;
+          this.atualizarWishlistStatus();
+        },
+        error: (err) => console.error('Erro ao adicionar à wishlist', err)
+      });
+    }
   }
 }

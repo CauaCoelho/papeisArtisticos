@@ -13,4 +13,6 @@ export interface CarrinhoItem {
     preco: number;
 
     quantidade: number;
+
+    imagemUrl?: string;
 }

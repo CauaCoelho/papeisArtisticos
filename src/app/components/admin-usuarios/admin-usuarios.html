@@ -1,0 +1,62 @@
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<div class="content">
+  @if (isSidebarOpen()) {
+  <app-sidebar></app-sidebar>
+  }
+  <main>
+    <section class="p-gutter max-w-container-max mx-auto space-y-stack-md">
+      <div class="flex items-end justify-between mb-stack-lg">
+        <div>
+          <h2 class="font-h1 text-h1 text-on-background">Usuários</h2>
+          <p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Veja todos os usuários cadastrados no aplicativo e seus perfis.</p>
+        </div>
+        <button mat-flat-button color="primary" (click)="carregarUsuarios()">
+          <mat-icon>refresh</mat-icon>
+          Atualizar
+        </button>
+      </div>
+
+      @if (loading()) {
+        <div class="empty-state">
+          <div class="spinner"></div>
+          <p>Carregando usuários...</p>
+        </div>
+      } @else if (errorMessage()) {
+        <div class="compras-error">
+          <mat-icon>error_outline</mat-icon>
+          <p>{{ errorMessage() }}</p>
+        </div>
+      } @else if (usuarios().length === 0) {
+        <div class="compras-empty">
+          <mat-icon>group</mat-icon>
+          <h3>Nenhum usuário encontrado</h3>
+          <p>Não há usuários cadastrados no sistema.</p>
+        </div>
+      } @else {
+        <div class="paper-grain bg-white rounded-xl shadow-[0_4px_20px_-2px_rgba(167,199,231,0.15)] overflow-hidden border border-zinc-50">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-zinc-50/50 border-b border-zinc-100">
+              <tr>
+                <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">ID</th>
+                <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Nome</th>
+                <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Usuário</th>
+                <th class="px-6 py-4 font-epilogue font-semibold text-zinc-600 text-sm">Perfil</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-100">
+              @for (usuario of usuarios(); track usuario.id) {
+              <tr class="hover:bg-sky-50/30 transition-colors">
+                <td class="px-6 py-5 text-zinc-600 font-medium">{{ usuario.id }}</td>
+                <td class="px-6 py-5 font-semibold text-zinc-900">{{ usuario.nome }}</td>
+                <td class="px-6 py-5 text-zinc-600">{{ usuario.username }}</td>
+                <td class="px-6 py-5 text-zinc-600">{{ usuario.perfil?.nome || 'Não definido' }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  </main>
+</div>
+<app-footer></app-footer>

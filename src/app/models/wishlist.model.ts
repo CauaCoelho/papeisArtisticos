@@ -9,12 +9,10 @@ export interface WishlistItem {
 
 export interface WishlistDTOResponse {
   id: number;
-  produto?: {
-    id: number;
-    nome?: string;
-    preco?: number;
-    marca?: { id: number; nome: string };
-    imagens?: { fid: string }[];
-    arquivos?: { fid: string }[];
-  };
+  produtoId: number;
+  produtoNome: string;
+  produtoImagem?: string;
+  preco?: number;
+  marca?: string;
+  produto?: any;
 }

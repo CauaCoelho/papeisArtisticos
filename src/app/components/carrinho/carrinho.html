@@ -1,21 +1,82 @@
-@for (item of itens; track item.varianteProdutoId) {
-<div>
+<div class="carrinho-page">
+  <div class="carrinho-header">
+    <h1>Seu Carrinho</h1>
+    <p>Revise seus itens e finalize seu pedido.</p>
+  </div>
 
-    <h3>{{ item.nomeProduto }}</h3>
+  <div class="carrinho-layout" *ngIf="itens.length > 0; else emptyCart">
+    
+    <!-- Lista de Itens -->
+    <div class="carrinho-items">
+      <div class="carrinho-item-card" *ngFor="let item of itens">
+        <div class="item-image-wrapper">
+          <img [src]="item.imagemUrl || 'https://via.placeholder.com/150x150?text=Produto'" [alt]="item.nomeProduto">
+        </div>
+        
+        <div class="item-details">
+          <h3 class="item-title">{{ item.nomeProduto }}</h3>
+          <div class="item-specs">
+            <span *ngIf="item.formato">{{ item.formato }}</span>
+            <span *ngIf="item.gramatura">• {{ item.gramatura }}g</span>
+          </div>
+          <div class="item-price">{{ item.preco | currency:'BRL' }}</div>
+        </div>
 
-    <p>{{ item.formato }}</p>
+        <div class="item-actions">
+          <div class="quantity-control">
+            <button mat-icon-button (click)="decrementar(item)" [disabled]="item.quantidade <= 1">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span class="quantity-text">{{ item.quantidade }}</span>
+            <button mat-icon-button (click)="incrementar(item)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <button mat-icon-button class="remove-btn" (click)="removerItem(item.varianteProdutoId)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <p>{{ item.gramatura }}g</p>
+    <!-- Resumo do Pedido -->
+    <div class="carrinho-summary-wrapper">
+      <div class="carrinho-summary">
+        <h2>Resumo do Pedido</h2>
+        
+        <div class="summary-row">
+          <span>Subtotal ({{ itens.length }} itens)</span>
+          <span>{{ totalCarrinho | currency:'BRL' }}</span>
+        </div>
+        
+        <div class="summary-row">
+          <span>Frete</span>
+          <span class="frete-gratis">Grátis</span>
+        </div>
 
-    <p>Qtd: {{ item.quantidade }}</p>
+        <div class="summary-divider"></div>
 
-    <p>R$ {{ item.preco }}</p>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span>{{ totalCarrinho | currency:'BRL' }}</span>
+        </div>
 
+        <button mat-flat-button class="checkout-btn" (click)="finalizarCompra()">
+          Finalizar Compra
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-state">
+      <mat-icon>shopping_basket</mat-icon>
+      <h2>Seu carrinho está vazio</h2>
+      <p>Navegue pela nossa loja e adicione papéis incríveis ao seu carrinho!</p>
+      <button mat-flat-button class="continue-shopping-btn" routerLink="/home">
+        Continuar Comprando
+      </button>
+    </div>
+  </ng-template>
 </div>
-} @empty {
-<p>O carrinho está vazio.</p>
-}
-
-<button (click)="finalizarCompra()">
-    Finalizar Compra
-</button>

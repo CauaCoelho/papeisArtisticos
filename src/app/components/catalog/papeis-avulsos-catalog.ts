@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PapelAvulsoService } from '../../services/papel-avulso.service';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { KeycloakService } from '../../services/keycloak.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Header } from '../layout/header/header';
@@ -23,6 +25,7 @@ export class PapeisAvulsosCatalog implements OnInit {
   readonly errorMessage = signal('');
   readonly searchTermSignal = signal('');
   readonly sidebarAberto = signal(false);
+  private readonly wishlistIds = signal<Set<number>>(new Set());
 
   get searchTerm(): string { return this.searchTermSignal(); }
   set searchTerm(value: string) { this.searchTermSignal.set(value); }
@@ -40,7 +43,9 @@ export class PapeisAvulsosCatalog implements OnInit {
 
   constructor(
     private papelService: PapelAvulsoService,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private wishlistService: WishlistService,
+    public keycloakService: KeycloakService
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +62,12 @@ export class PapeisAvulsosCatalog implements OnInit {
             detalhe: `Tamanho ${p.tamanho || '--'} · ${texturaNome || 'Textura padrão'}`,
             imagemUrl: arquivos.length > 0
               ? `/papeis/image/download/${arquivos[0].fid}`
-              : 'https://via.placeholder.com/300x220?text=Papel+Avulso'
+              : 'https://via.placeholder.com/300x220?text=Papel+Avulso',
+            inWishlist: false
           };
         });
         this.produtos.set(mapped);
+        this.carregarWishlist();
         this.loading.set(false);
       },
       error: (err) => {
@@ -73,6 +80,57 @@ export class PapeisAvulsosCatalog implements OnInit {
   filtrarProdutos(): void { }
 
   trackById(_: number, p: any) { return p?.id ?? _; }
+
+  private carregarWishlist(): void {
+    if (!this.keycloakService.isLoggedIn()) {
+      this.wishlistIds.set(new Set());
+      return;
+    }
+
+    this.wishlistService.listar().subscribe({
+      next: (items) => {
+        const ids = new Set(items.map(item => item.produtoId));
+        this.wishlistIds.set(ids);
+        this.produtos.update(current => current.map(produto => ({
+          ...produto,
+          inWishlist: ids.has(produto.id ?? produto.produtoId)
+        })));
+      },
+      error: (err) => console.error('Erro ao carregar wishlist do usuário:', err)
+    });
+  }
+
+  toggleWishlist(produto: any, event: Event): void {
+    event.stopPropagation();
+    if (!this.keycloakService.isLoggedIn()) {
+      this.keycloakService.login();
+      return;
+    }
+
+    const produtoId = produto.id ?? produto.produtoId;
+    if (!produtoId) {
+      console.error('Produto sem id para wishlist:', produto);
+      return;
+    }
+
+    if (produto.inWishlist) {
+      this.wishlistService.remover(produtoId).subscribe({
+        next: () => {
+          produto.inWishlist = false;
+          this.carregarWishlist();
+        },
+        error: (err) => console.error('Erro ao remover da wishlist', err)
+      });
+    } else {
+      this.wishlistService.adicionar(produtoId).subscribe({
+        next: () => {
+          produto.inWishlist = true;
+          this.carregarWishlist();
+        },
+        error: (err) => console.error('Erro ao adicionar à wishlist', err)
+      });
+    }
+  }
 
   adicionarAoCarrinho(produto: any, event: Event): void {
     event.stopPropagation();

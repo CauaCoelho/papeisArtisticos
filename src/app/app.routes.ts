@@ -20,6 +20,7 @@ import { PapelAvulsoListComponent } from './components/papel-avulso-list/papel-a
 import { PapelAvulsoForm } from './components/papel-avulso-form/papel-avulso-form';
 import { PapelAvulsoEdit } from './components/papel-avulso-edit/papel-avulso-edit';
 import { papelAvulsoResolver } from './components/resolvers/papel-avulso-resolver';
+import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios';
 import { SketchbooksCatalog } from './components/catalog/sketchbooks-catalog';
 import { BlocosCatalog } from './components/catalog/blocos-catalog';
 import { PapeisAvulsosCatalog } from './components/catalog/papeis-avulsos-catalog';
@@ -58,6 +59,7 @@ export const routes: Routes = [
     title: 'Editar Papel Avulso',
     resolve: { papel: papelAvulsoResolver },
   },
+  { path: 'admin/usuarios', component: AdminUsuariosComponent, title: 'Usuários' },
   { path: 'carrinho', component: Carrinho, title: 'Carrinho de compras' },
   { path: 'home', component: Home, title: 'Tela inicial' },
   { path: 'perfil', component: PerfilComponent, title: 'Meu Perfil', canActivate: [keycloakGuard] },

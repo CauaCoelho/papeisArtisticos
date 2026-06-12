@@ -47,7 +47,7 @@
   border-radius: 24px;
   overflow: hidden;
   background: #f8fafc;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .main-image img {
@@ -176,17 +176,43 @@
 
 .main-add-cart-btn {
   height: 60px !important;
-  border-radius: 16px !important;
+  border-radius: var(--radius-full) !important;
+  font-family: var(--font-body);
   font-size: 1.2rem !important;
-  background-color: #0f172a !important;
-  color: white !important;
+  font-weight: 700;
+  background-color: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+  border: 2px solid var(--color-text) !important;
   transition: all 0.3s ease !important;
 }
 
 .main-add-cart-btn:hover {
-  background-color: #38bdf8 !important;
-  box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4) !important;
+  background-color: var(--color-primary-container) !important;
+  color: var(--color-on-primary-container) !important;
+  box-shadow: var(--shadow-hover) !important;
   transform: translateY(-2px) !important;
+}
+
+.wishlist-detail-btn {
+  height: 50px !important;
+  border-radius: var(--radius-full) !important;
+  font-family: var(--font-body);
+  font-weight: 700 !important;
+  color: var(--color-primary) !important;
+  border: 2px solid var(--color-primary) !important;
+  transition: all 0.3s ease !important;
+}
+
+.wishlist-detail-btn:hover {
+  background-color: var(--color-primary-container) !important;
+  color: var(--color-on-primary-container) !important;
+  border-color: var(--color-on-primary-container) !important;
+}
+
+.wishlist-detail-btn.active {
+  background-color: var(--color-primary-container) !important;
+  color: var(--color-on-primary-container) !important;
+  border-color: var(--color-on-primary-container) !important;
 }
 
 .shipping-info {
@@ -260,7 +286,7 @@
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: transform 0.3s ease;
   border: 1px solid #f1f5f9;
@@ -268,7 +294,7 @@
 
 .produto-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .card-image {
@@ -326,17 +352,21 @@
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 992px) {
   .product-layout {
     grid-template-columns: 1fr;
   }
+
   .produtos-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 576px) {
   .produtos-grid {
     grid-template-columns: 1fr;

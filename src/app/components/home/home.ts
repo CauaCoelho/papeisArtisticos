@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProdutoService } from '../../services/produto.service';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { KeycloakService } from '../../services/keycloak.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -48,10 +50,35 @@ export class Home implements OnInit {
     );
   });
 
+  private readonly wishlistIds = signal<Set<number>>(new Set());
+
   constructor(
     private produtoService: ProdutoService,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private wishlistService: WishlistService,
+    public keycloakService: KeycloakService
   ) { }
+
+  private carregarWishlist(): void {
+    if (!this.keycloakService.isLoggedIn()) {
+      this.wishlistIds.set(new Set());
+      return;
+    }
+
+    this.wishlistService.listar().subscribe({
+      next: (items) => {
+        const ids = new Set(items.map(item => item.produtoId));
+        this.wishlistIds.set(ids);
+        this.produtos.update(current => current.map(produto => ({
+          ...produto,
+          inWishlist: ids.has(produto.id ?? produto.produtoId)
+        })));
+      },
+      error: (err) => {
+        console.error('Erro ao carregar wishlist do usuário:', err);
+      }
+    });
+  }
 
   ngOnInit(): void {
     console.log('[HOME] ngOnInit chamado - iniciando busca de produtos...');
@@ -79,6 +106,7 @@ export class Home implements OnInit {
           });
 
           this.produtos.set(mappedProdutos);
+          this.carregarWishlist();
           console.log('[HOME] Produtos mapeados com sucesso:', mappedProdutos.length);
         } catch (e: any) {
           console.error('[HOME] Mapping error:', e);
@@ -114,5 +142,38 @@ export class Home implements OnInit {
       quantidade: 1
     });
     alert(`${produto.nome} adicionado ao carrinho!`);
+  }
+
+  toggleWishlist(produto: any, event: Event): void {
+    event.stopPropagation();
+    
+    if (!this.keycloakService.isLoggedIn()) {
+      this.keycloakService.login();
+      return;
+    }
+
+    const produtoId = produto.id ?? produto.produtoId;
+    if (!produtoId) {
+      console.error('Produto sem id para wishlist:', produto);
+      return;
+    }
+
+    if (produto.inWishlist) {
+      this.wishlistService.remover(produtoId).subscribe({
+        next: () => {
+          produto.inWishlist = false;
+          this.carregarWishlist();
+        },
+        error: (err) => console.error('Erro ao remover da wishlist', err)
+      });
+    } else {
+      this.wishlistService.adicionar(produtoId).subscribe({
+        next: () => {
+          produto.inWishlist = true;
+          this.carregarWishlist();
+        },
+        error: (err) => console.error('Erro ao adicionar à wishlist', err)
+      });
+    }
   }
 }

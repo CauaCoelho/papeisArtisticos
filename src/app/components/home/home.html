@@ -29,6 +29,12 @@
         <div class="produto-card" *ngFor="let produto of produtosFiltrados(); trackBy: trackByProdutoId" [routerLink]="['/produtos', produto.id]">
           <div class="card-image">
             <img [src]="produto.imagemUrl" [alt]="produto.nome" />
+            <button mat-icon-button class="wishlist-btn" 
+                    [class.active]="produto.inWishlist" 
+                    (click)="toggleWishlist(produto, $event)"
+                    title="Adicionar aos Favoritos">
+              <mat-icon>{{ produto.inWishlist ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
             <div class="card-overlay">
               <mat-icon>visibility</mat-icon>
               <span>Ver Detalhes</span>

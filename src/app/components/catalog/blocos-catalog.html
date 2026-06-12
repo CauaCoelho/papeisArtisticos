@@ -45,6 +45,11 @@
           <div class="produto-card" [routerLink]="['/produtos', produto.id]">
             <div class="card-image">
               <img [src]="produto.imagemUrl" [alt]="produto.nome" />
+              <button mat-icon-button class="wishlist-btn" [class.active]="produto.inWishlist"
+                      (click)="toggleWishlist(produto, $event)"
+                      title="Adicionar aos favoritos">
+                <mat-icon>{{ produto.inWishlist ? 'favorite' : 'favorite_border' }}</mat-icon>
+              </button>
               <div class="card-overlay">
                 <mat-icon>visibility</mat-icon>
                 <span>Ver Detalhes</span>

@@ -20,26 +20,24 @@
   } @else {
     <div class="wishlist-grid">
       @for (item of items(); track item.id) {
-        @if (item.produto) {
-          <div class="wishlist-card" [routerLink]="['/produtos', item.produto.id]">
-            <div class="wishlist-card-image">
-              <img [src]="getImagemUrl(item)" [alt]="item.produto.nome" />
-              <button class="btn-remove-fav" (click)="removerItem(item.produto.id, $event)" title="Remover dos favoritos">
-                <mat-icon>favorite</mat-icon>
-              </button>
-            </div>
-            <div class="wishlist-card-content">
-              <span class="brand-badge">{{ item.produto.marca?.nome || 'Marca Genérica' }}</span>
-              <h4 class="product-title">{{ item.produto.nome }}</h4>
-              <p class="product-price">{{ item.produto.preco | currency:'BRL' }}</p>
-            </div>
-            <div class="wishlist-card-actions">
-              <button mat-flat-button class="btn-comprar" (click)="adicionarAoCarrinho(item, $event)">
-                <mat-icon>shopping_cart</mat-icon> Comprar
-              </button>
-            </div>
+        <div class="wishlist-card" [routerLink]="['/produtos', item.produtoId]">
+          <div class="wishlist-card-image">
+            <img [src]="getImagemUrl(item)" [alt]="item.produtoNome" />
+            <button class="btn-remove-fav" (click)="removerItem(item.produtoId, $event)" title="Remover dos favoritos">
+              <mat-icon>favorite</mat-icon>
+            </button>
           </div>
-        }
+          <div class="wishlist-card-content">
+            <span class="brand-badge">{{ getProductBrand(item) }}</span>
+            <h4 class="product-title">{{ item.produtoNome }}</h4>
+            <p class="product-price">{{ getProductPrice(item) | currency:'BRL' }}</p>
+          </div>
+          <div class="wishlist-card-actions">
+            <button mat-flat-button class="btn-comprar" (click)="adicionarAoCarrinho(item, $event)">
+              <mat-icon>shopping_cart</mat-icon> Comprar
+            </button>
+          </div>
+        </div>
       }
     </div>
   }

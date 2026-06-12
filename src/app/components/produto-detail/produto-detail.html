@@ -15,12 +15,14 @@
         @for (img of imagens; track img) {
         <img [src]="img" [class.active]="img === imagemPrincipal" (click)="alterarImagemPrincipal(img)">
         }
+        @if (isAdmin) {
         <div class="upload-btn-container">
           <button mat-stroked-button (click)="fileInput.click()">
             <mat-icon>upload_file</mat-icon> Enviar Imagem
           </button>
           <input #fileInput type="file" accept="image/*" style="display: none;" (change)="uploadImagem($event)">
         </div>
+        }
       </div>
     </div>
 
@@ -61,6 +63,11 @@
 
         <button mat-flat-button class="main-add-cart-btn" (click)="adicionarAoCarrinho()">
           <mat-icon>shopping_cart</mat-icon> Adicionar ao Carrinho
+        </button>
+
+        <button mat-stroked-button class="wishlist-detail-btn" (click)="toggleWishlist()" [class.active]="produto.inWishlist">
+          <mat-icon>{{ produto.inWishlist ? 'favorite' : 'favorite_border' }}</mat-icon>
+          {{ produto.inWishlist ? 'Na Lista de Desejos' : 'Adicionar à Lista' }}
         </button>
       </div>
 

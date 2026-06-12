@@ -16,12 +16,12 @@
                     href="#">Coleções</a>
                 <a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors"
                     href="#">Novidades</a>
-                <a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors"
-                    href="#">Estúdio de Papéis</a>
-                <a class="text-zinc-900 dark:text-white border-b-2 border-sky-200 pb-1 font-medium"
-                    href="#">O Arquivo</a>
-                <a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors"
-                    href="#">Sobre Nós</a>
+                <a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">Estúdio
+                    de Papéis</a>
+                <a class="text-zinc-900 dark:text-white border-b-2 border-sky-200 pb-1 font-medium" href="#">O
+                    Arquivo</a>
+                <a class="text-zinc-500 dark:text-zinc-400 pb-1 hover:text-zinc-800 transition-colors" href="#">Sobre
+                    Nós</a>
             </nav>
         </div>
         <div class="flex items-center gap-6">
@@ -32,29 +32,28 @@
 
             <!-- Logado: mostra nome + link perfil + logout -->
             @if (keycloak.isLoggedIn()) {
-                <div class="flex items-center gap-3">
-                    <a routerLink="/perfil"
-                        class="flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 hover:bg-sky-100 transition-all duration-200 text-sky-700 font-medium text-sm no-underline">
-                        <span class="material-symbols-outlined" style="font-size:1.2rem">account_circle</span>
-                        <span class="hidden md:inline">{{ keycloak.nomeUsuario() ?? 'Perfil' }}</span>
-                    </a>
-                    <button
-                        class="p-2 hover:bg-red-50 rounded-full transition-all duration-200 text-zinc-400 hover:text-red-500"
-                        (click)="logout()"
-                        title="Sair">
-                        <span class="material-symbols-outlined" style="font-size:1.3rem">logout</span>
-                    </button>
-                </div>
+            <div class="flex items-center gap-3">
+                <a routerLink="/perfil"
+                    class="flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 hover:bg-sky-100 transition-all duration-200 text-sky-700 font-medium text-sm no-underline">
+                    <span class="material-symbols-outlined" style="font-size:1.2rem">account_circle</span>
+                    <span class="hidden md:inline">{{ keycloak.nomeUsuario() ?? 'Perfil' }}</span>
+                </a>
+                <button
+                    class="p-2 hover:bg-red-50 rounded-full transition-all duration-200 text-zinc-400 hover:text-red-500"
+                    (click)="logout()" title="Sair">
+                    <span class="material-symbols-outlined" style="font-size:1.3rem">logout</span>
+                </button>
+            </div>
             }
 
             <!-- Não logado: botão de login -->
             @if (!keycloak.isLoggedIn()) {
-                <button
-                    class="flex items-center gap-2 px-5 py-2 rounded-full bg-zinc-900 hover:bg-sky-500 text-white text-sm font-medium transition-all duration-200"
-                    (click)="login()">
-                    <span class="material-symbols-outlined" style="font-size:1.1rem">person</span>
-                    <span>Entrar</span>
-                </button>
+            <button
+                class="flex items-center gap-2 px-5 py-2 rounded-full bg-zinc-900 hover:bg-sky-500 text-white text-sm font-medium transition-all duration-200"
+                (click)="login()">
+                <span class="material-symbols-outlined" style="font-size:1.1rem">person</span>
+                <span>Entrar</span>
+            </button>
             }
         </div>
     </div>
