@@ -35,15 +35,24 @@
         <!-- Capa -->
         <mat-form-field appearance="outline">
           <mat-label>Capa</mat-label>
-          <mat-select matInput formControlName="idCapa" placeholder="Selecione uma capa">
-            <mat-option [value]="null" disabled="false"> Nenhum </mat-option>
-            @for (c of capas; track c.id) {
-            <mat-option [value]="c.id">{{c.nome}} </mat-option>
-
-            }
+          <mat-select formControlName="idCapa" placeholder="Selecione uma capa">
+            <mat-option [value]="null" disabled> Nenhum </mat-option>
+            <mat-option *ngFor="let c of capas" [value]="c.id">{{ c.nome }}</mat-option>
           </mat-select>
           <mat-error [hidden]="!(form.get('idCapa')?.hasError('required') && form.get('idCapa')?.touched)">
             A capa é obrigatória.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Textura -->
+        <mat-form-field appearance="outline">
+          <mat-label>Textura</mat-label>
+          <mat-select formControlName="idTextura" placeholder="Selecione uma textura">
+            <mat-option [value]="null" disabled> Nenhuma </mat-option>
+            <mat-option *ngFor="let t of texturas" [value]="t.id">{{ t.nome }}</mat-option>
+          </mat-select>
+          <mat-error [hidden]="!(form.get('idTextura')?.hasError('required') && form.get('idTextura')?.touched)">
+            A textura é obrigatória.
           </mat-error>
         </mat-form-field>
 

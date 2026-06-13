@@ -1,26 +1,45 @@
 .toolbar-title {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  padding: 1rem 1.25rem;
+  border-radius: 1.25rem 1.25rem 0 0;
 }
 
 .card {
-  max-width: 850px;
-  margin: 24px auto;
-  padding: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.75rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 24px 52px rgba(31, 41, 55, 0.08);
+  border: 1px solid rgba(66, 97, 125, 0.08);
 }
 
 .form {
   display: grid;
-  gap: 18px;
+  gap: 1.5rem;
 }
 
 .grid {
   display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
+
+.actions button {
+  min-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+

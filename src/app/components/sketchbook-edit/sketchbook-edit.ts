@@ -5,14 +5,16 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { SketchbookService } from '../../services/sketchbook.service';
 import { AnimacaoDialog } from '../animacao-dialog/animacao-dialog';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sketchbook-edit',
   standalone: true,
-  imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule],
+  imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatToolbarModule, MatCardModule, MatDialogModule],
   templateUrl: './sketchbook-edit.html',
   styleUrl: './sketchbook-edit.css',
 })

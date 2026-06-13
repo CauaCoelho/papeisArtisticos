@@ -29,7 +29,7 @@ import { PapelAvulso } from '../../models/papel-avulso.model';
     RouterLink,
   ],
   templateUrl: './papel-avulso-form.html',
-  styleUrl: './papel-avulso-form.css',
+  styleUrls: ['./papel-avulso-form.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PapelAvulsoForm implements OnInit {

@@ -1,21 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { MatToolbar } from "@angular/material/toolbar";
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { SketchbookService } from '../../services/sketchbook.service';
 import { Sketchbook } from '../../models/sketchbook.model';
 import { MatInputModule } from '@angular/material/input';
 import { CapaService } from '../../services/capa.service';
 import { Capa } from '../../models/capa.model';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AnimacaoDialog } from '../animacao-dialog/animacao-dialog';
-import { ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-sketchbook-form',
@@ -23,21 +22,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatToolbarModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbar,
-    MatFormField,
-    MatCardModule,
-    MatOption,
+    MatSelectModule,
     MatButtonModule,
-    MatLabel,
+    MatSnackBarModule,
     RouterLink,
-    MatOption,
     MatDialogModule,
-
   ],
   templateUrl: './sketchbook-form.html',
-  styleUrl: './sketchbook-form.css',
+  styleUrls: ['./sketchbook-form.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -45,6 +41,12 @@ export class SketchbookForm implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly form: FormGroup;
   capas: Capa[] = [];
+  readonly texturas = [
+    { id: 1, nome: 'Trançado' },
+    { id: 2, nome: 'Casca de ovo' },
+    { id: 3, nome: 'Kraft' },
+    { id: 4, nome: 'Liso' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +60,8 @@ export class SketchbookForm implements OnInit {
       id: [null],
       nome: ['', [Validators.required, Validators.minLength(3)]],
       quantidadeFolhas: [null, [Validators.required, Validators.min(20)]],
-      idCapa: [null, Validators.required]
+      idCapa: [null, Validators.required],
+      idTextura: [null, Validators.required]
     })
   }
 
@@ -73,7 +76,8 @@ export class SketchbookForm implements OnInit {
           id: sketchbook.id,
           nome: sketchbook.nome,
           quantidadeFolhas: sketchbook.quantidadeFolhas,
-          idCapa: sketchbook.capa?.id
+          idCapa: sketchbook.capa?.id,
+          idTextura: sketchbook.idTextura || sketchbook.textura?.id
         });
     })
 
